@@ -11,6 +11,14 @@ ro.config.vc_call_vol_steps=11
 vendor.audio.spkcal.copy.inhal=true
 vendor.audiohal.telephonytx.type=2
 
+# Dolby
+ro.vendor.audio.device.dbcom=dolby_common
+ro.vendor.audio.dolby.dax.support=true
+ro.vendor.audio.dolby.dax3_3point8=true
+ro.vendor.dolby.dax.version=DAX3_3.12.0.8_r1
+vendor.audio.dolby.control.support=true
+vendor.audio.dolby.control.tunning.by.volume.support=false
+
 # Camera
 camera.disable_zsl_mode=1
 persist.vendor.camera3.pipeline.bufnum.base.imgo=4

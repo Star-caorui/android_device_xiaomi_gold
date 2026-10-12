@@ -1,0 +1,6 @@
+# Dolby's audio processing service. The effect inside the audio HAL is its client.
+binder_call(hal_dms_client, hal_dms_server)
+binder_call(hal_dms_server, hal_dms_client)
+
+hal_attribute_service(hal_dms, hal_dms_service)
+binder_use(hal_dms_server)

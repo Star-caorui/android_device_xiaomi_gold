@@ -83,6 +83,18 @@ blob_fixups: blob_fixups_user_type = {
         .replace_needed('vendor.mediatek.hardware.bluetooth.audio-V1-ndk.so',
                         'vendor.mediatek.hardware.bluetooth.audio-V3-ndk.so'),
 
+    # Dolby's effect is an Android 15 binary as well and converts types the same way.
+    'vendor/lib64/soundfx/libswdapaidl.so': blob_fixup()
+        .replace_needed('libaudio_aidl_conversion_common_ndk.so',
+                        'libaudio_aidl_conversion_common_ndk_prebuilt.so'),
+
+    # These two create ALooper and ABuffer objects themselves, so they keep the stock copy
+    # of the library that defines them.
+    ('vendor/lib64/libdlbdsservice.so',
+     'vendor/lib64/libdlbpreg.so'): blob_fixup()
+        .replace_needed('libstagefright_foundation.so',
+                        'libstagefright_foundation-v35.so'),
+
     'vendor/lib64/android.hardware.audio.core-impl-mediatek.so': blob_fixup()
         .add_needed('libaudioutils_shim.so')
         .replace_needed('libaudio_aidl_conversion_common_ndk.so',

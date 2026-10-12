@@ -3,6 +3,7 @@ type gold_camera_persist_file, file_type, data_file_type;
 type gold_miev_device, dev_type;
 type gold_touch_device, dev_type;
 type gold_audio_socket, file_type;
+type gold_dolby_data_file, file_type, data_file_type;
 
 type gold_dmabuf_fs, fs_type;
 type gold_sysfs_audio_amp, fs_type, sysfs_type;

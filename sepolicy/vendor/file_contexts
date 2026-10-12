@@ -27,3 +27,7 @@
 
 # Neural networks service. The shared MediaTek policy labels the service by a name without "-legacy".
 /(vendor|system/vendor)/bin/hw/android\.hardware\.neuralnetworks-shim-service-mtk-legacy    u:object_r:mtk_hal_neuralnetworks_exec:s0
+
+# Dolby
+/data/vendor/dolby(/.*)?    u:object_r:gold_dolby_data_file:s0
+/(vendor|system/vendor)/bin/hw/vendor\.dolby\.dms\.service    u:object_r:hal_dms_default_exec:s0

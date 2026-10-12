@@ -5,3 +5,6 @@ allow hal_audio_default gold_miev_device:chr_file { open write };
 
 # Region configuration queried by the proprietary Xiaomi audio libraries.
 get_prop(hal_audio_default, system_gold_audio_config_prop)
+
+# Dolby's effect talks to its service.
+hal_client_domain(hal_audio_default, hal_dms)
