@@ -231,6 +231,10 @@ blob_fixups: blob_fixups_user_type = {
      'vendor/lib64/libcodec2_vpp_qt_plugin.so',
      'vendor/lib64/libcodec2_vpp_rs_plugin.so',
      'vendor/lib64/vpp_hdrmeta_handler_plugin.so',
+     'vendor/bin/hw/vendor.dolby.media.c2-default-service-dax',
+     'vendor/lib64/libcodec2_soft_ac4dec.so',
+     'vendor/lib64/libcodec2_soft_ddpdec.so',
+     'vendor/lib64/libcodec2_store_dolby.so',
      *(f'vendor/lib64/{lib}-v35.so' for lib in codec2_stock_libs)): codec2_fixup(),
 
     # MediaTek's libformatter is installed as libformatter_mtk, because the platform now has

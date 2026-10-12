@@ -1,0 +1,2 @@
+# Dolby's decoders run in their own Codec2 service and read their tuning from Dolby's service.
+hal_client_domain(mediacodec, hal_dms)

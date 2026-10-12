@@ -31,3 +31,4 @@
 # Dolby
 /data/vendor/dolby(/.*)?    u:object_r:gold_dolby_data_file:s0
 /(vendor|system/vendor)/bin/hw/vendor\.dolby\.dms\.service    u:object_r:hal_dms_default_exec:s0
+/(vendor|system/vendor)/bin/hw/vendor\.dolby\.media\.c2-default-service-dax    u:object_r:mediacodec_exec:s0
