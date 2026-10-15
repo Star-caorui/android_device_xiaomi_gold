@@ -11,9 +11,9 @@ Releases are built from the [lineage-24.0](https://github.com/Star-caorui/androi
 | Stock kernel and modules | [android_device_xiaomi_gold-kernel](https://github.com/Star-caorui/android_device_xiaomi_gold-kernel/tree/lineage-23.2#readme) |
 | Proprietary files | [android_vendor_xiaomi_gold](https://github.com/Star-caorui/android_vendor_xiaomi_gold/tree/lineage-23.2#readme) |
 
-## Upstream
+## Origin
 
-This is a fork of [Dhterech's tree](https://github.com/Dhterech/android_device_xiaomi_gold). Our changes sit on top of his, one per commit: [the list](https://github.com/Star-caorui/android_device_xiaomi_gold/compare/6c5bdc8...lineage-23.2).
+Forked from [Dhterech's tree](https://github.com/Dhterech/android_device_xiaomi_gold) at `6c5bdc8` and maintained on its own since: [our commits](https://github.com/Star-caorui/android_device_xiaomi_gold/compare/6c5bdc8...lineage-23.2).
 
 ## Scripts
 
@@ -28,7 +28,7 @@ Both read the same stock package. Which one, and how to run them, is in the READ
 
 | Who | For what |
 | --- | --- |
-| [Dhterech](https://github.com/Dhterech/android_device_xiaomi_gold) | This is his tree |
+| [Dhterech](https://github.com/Dhterech/android_device_xiaomi_gold) | The tree this one was forked from |
 | xiaomi-mt6833-dev/device_xiaomi_mt6833-common, aeronruless (Telegram), linastorvaldz (GitHub) | Dhterech's tree is based on their work |
 | mt6897-devs/device_xiaomi_duchamp, LineageOS/android_device_xiaomi_rosemary | Dhterech's references |
 | claxten10's [mt6833-devs/android_device_xiaomi_gold](https://github.com/mt6833-devs/android_device_xiaomi_gold) | The tree Dhterech's is built on |
