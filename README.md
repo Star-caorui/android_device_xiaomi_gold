@@ -8,7 +8,7 @@ Releases are built from the [lineage-24.0](https://github.com/Star-caorui/androi
 | --- | --- |
 | Releases, what works, tested models | [lineageos-gold](https://github.com/Star-caorui/lineageos-gold#readme) |
 | How to build | [local_manifests](https://github.com/Star-caorui/local_manifests/tree/lineage-23.2#readme) |
-| Stock kernel and modules | [android_device_xiaomi_gold-kernel](https://github.com/Star-caorui/android_device_xiaomi_gold-kernel/tree/lineage-23.2#readme) |
+| Stock kernel and modules | [android_device_xiaomi_gold-kernels](https://github.com/Star-caorui/android_device_xiaomi_gold-kernels/tree/lineage-23.2#readme) |
 | Proprietary files | [android_vendor_xiaomi_gold](https://github.com/Star-caorui/android_vendor_xiaomi_gold/tree/lineage-23.2#readme) |
 
 ## Origin
@@ -22,7 +22,7 @@ Both read the same stock package. Which one, and how to run them, is in the READ
 | Script | What it fills |
 | --- | --- |
 | `extract-files.py` | `vendor/xiaomi/gold`, kept as [android_vendor_xiaomi_gold](https://github.com/Star-caorui/android_vendor_xiaomi_gold/tree/lineage-23.2#regenerating) |
-| `extract-kernel.sh` | `device/xiaomi/gold-kernel`, kept as [android_device_xiaomi_gold-kernel](https://github.com/Star-caorui/android_device_xiaomi_gold-kernel/tree/lineage-23.2#regenerating) |
+| `extract-kernel.sh` | `device/xiaomi/gold-kernel`, kept as [android_device_xiaomi_gold-kernels](https://github.com/Star-caorui/android_device_xiaomi_gold-kernels/tree/lineage-23.2#regenerating) |
 
 ## Credits
 
