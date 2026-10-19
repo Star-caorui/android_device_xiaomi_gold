@@ -22,7 +22,7 @@ Both read the same stock package. Which one, and how to run them, is in the READ
 | Script | What it fills |
 | --- | --- |
 | `extract-files.py` | `vendor/xiaomi/gold`, kept as [android_vendor_xiaomi_gold](https://github.com/Star-caorui/android_vendor_xiaomi_gold/tree/lineage-23.2#regenerating) |
-| `extract-kernel.sh` | `device/xiaomi/gold-kernel`, kept as [android_device_xiaomi_gold-kernels](https://github.com/Star-caorui/android_device_xiaomi_gold-kernels/tree/lineage-23.2#regenerating) |
+| `extract-kernel.sh` | `device/xiaomi/gold-kernel`, kept as [android_device_xiaomi_gold-kernels](https://github.com/Star-caorui/android_device_xiaomi_gold-kernels/tree/lineage-23.2#source) |
 
 ## Credits
 
