@@ -1948,6 +1948,7 @@ vendor/lib64/vendor.mediatek.hardware.mms-V1-ndk.so
 # NetD Agent
 vendor/bin/netdagent
 vendor/etc/init/netdagent.rc
+vendor/etc/vintf/manifest/CommandService.xml
 vendor/lib64/libforkexecwrap.so
 vendor/lib64/libifcutils_mtk.so
 vendor/lib64/vendor.mediatek.hardware.netdagent-V1-ndk.so
