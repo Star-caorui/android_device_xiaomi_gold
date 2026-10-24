@@ -1,8 +1,8 @@
-# The firmware partitions of gold_global-ota_full-OS3.0.5.0.VNQMIXM-user-15.0-df9ff3aa93.zip, unchanged
+# The firmware partitions of gold_global-ota_full-OS3.0.5.0.VNQMIXM-user-15.0-df9ff3aa93.zip, unchanged,
+# but for lk: the package leaves each unit's lk as it is
 
 dpm.img;AB
 gz.img;AB
-lk.img;AB
 mcupm.img;AB
 md1img.img;AB
 pi_img.img;AB
