@@ -9,16 +9,6 @@
         <name>vendor.mediatek.hardware.audio</name>
         <fqname>IMtkAudio/default</fqname>
     </hal>
-    <hal format="aidl">
-        <name>android.hardware.graphics.allocator</name>
-        <version>2</version>
-        <fqname>IAllocator/default</fqname>
-    </hal>
-    <hal format="aidl">
-        <name>android.hardware.graphics.composer3</name>
-        <version>3</version>
-        <fqname>IComposer/default</fqname>
-    </hal>
 
     <!-- Blob-backed HALs as declared by OS3.0.5.0.VNQMIXM. -->
     <hal format="aidl">
