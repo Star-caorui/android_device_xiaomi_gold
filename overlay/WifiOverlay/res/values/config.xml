@@ -70,4 +70,9 @@
          The attempt fails either way on this device, because wpa_supplicant is built
          without MediaTek's driver command library. -->
     <bool translatable="false" name="config_wifiStaDynamicCountryCodeUpdateSupported">true</bool>
+    <!-- As stock: Wi-Fi Easy Connect (DPP), network centric QoS policies, and link layer
+         statistics summed over all radios. -->
+    <bool translatable="false" name="config_wifiDppAkmSupported">true</bool>
+    <bool translatable="false" name="config_wifiNetworkCentricQosPolicyFeatureEnabled">true</bool>
+    <bool translatable="false" name="config_wifiLinkLayerAllRadiosStatsAggregationEnabled">true</bool>
 </resources>

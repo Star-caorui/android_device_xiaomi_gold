@@ -585,4 +585,8 @@
 
     <!-- Doze: should the TYPE_PICK_UP_GESTURE sensor be used as a pulse signal. -->
     <bool name="config_dozePulsePickup">true</bool>
+
+    <!-- As stock: the camera and microphone access toggles in quick settings. -->
+    <bool name="config_supportsCamToggle">true</bool>
+    <bool name="config_supportsMicToggle">true</bool>
 </resources>

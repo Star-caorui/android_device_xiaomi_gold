@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The wakeup interrupts the battery stats charge to a subsystem, as stock's: the alarm timer. -->
+<irq-device-map>
+    <device name="alarmtimer.0.auto">
+        <subsystem>Alarm</subsystem>
+    </device>
+</irq-device-map>
