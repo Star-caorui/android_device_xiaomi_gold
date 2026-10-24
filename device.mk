@@ -11,6 +11,12 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/generic_ramdisk.mk)
 # Inherit launch_with_vendor_ramdisk product
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_vendor_ramdisk.mk)
 
+# Virtual A/B with compressed snapshots, as stock: its ro.virtual_ab.* properties are the
+# Android 13 baseline's and threads=true, and its payload is compressed with gzip.
+$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/android_t_baseline.mk)
+PRODUCT_VIRTUAL_AB_COMPRESSION_METHOD := gz
+PRODUCT_VENDOR_PROPERTIES += ro.virtual_ab.compression.threads=true
+
 # Project ID Quota
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 
