@@ -48,6 +48,7 @@ ro.vendor.mtk_f2fs_enable=1
 
 # DRM
 ro.netflix.bsp_rev=MTK6833-32817-1
+drm.service.enabled=true
 
 # Fingerprint
 persist.vendor.fingerprint.type=side
@@ -80,6 +81,7 @@ ro.hardware.hwcomposer=mtk_common
 ro.hardware.vulkan=mali
 ro.hardware.egl=meow
 ro.opengles.version=196610
+graphics.gpu.profiler.support=true
 
 # Mali EGL and gralloc format configuration (from stock vendor)
 ro.vendor.arm.egl.configs.nv12.hal_format=0x200
@@ -141,6 +143,7 @@ ro.vendor.arm.gralloc.shared_access_usage_mask=0x50000000
 
 # HWUI
 debug.hwui.use_hint_manager=false
+debug.hwui.initialize_gl_always=1
 
 # Media
 media.c2.hal.selection=aidl
@@ -163,6 +166,16 @@ ro.vendor.mtk_nn_support=1
 ro.vendor.mtk_nn.option=A,B,E,F,Z
 ro.vendor.mtk_nn_quant_preferred=1
 ro.vendor.mtk_nn_baseline_support=1
+
+# Memory: stock's low memory killer tuning
+ro.lmk.kill_timeout_ms=100
+ro.lmk.low=1000
+ro.lmk.psi_complete_stall_ms=35
+ro.lmk.psi_partial_stall_ms=35
+ro.lmk.swap_free_low_percentage=10
+ro.lmk.swap_util_max=90
+ro.lmk.thrashing_limit=30
+ro.lmk.thrashing_limit_decay=50
 
 # Picture Quality
 debug.mediatek.appgamepq_compress=1
@@ -199,6 +212,11 @@ ro.vendor.pq.mtk_blulight_def_support=1
 ro.vendor.mediatek.platform=MT6833
 ro.soc.model=MT6833
 ro.soc.manufacturer=Mediatek
+apexd.config.dm_create.timeout=5000
+dalvik.vm.dex2oat64.enabled=true
+ro.incremental.enable=yes
+ro.frp.pst=/dev/block/by-name/frp
+ro.oem_unlock_supported=1
 
 # Surface Flinger
 debug.sf.enable_adpf_cpu_hint=true
@@ -228,6 +246,9 @@ ro.surface_flinger.has_HDR_display=false
 ro.surface_flinger.has_wide_color_display=true
 ro.surface_flinger.use_color_management=true
 ro.surface_flinger.wcg_composition_dataspace=143261696
+debug.renderengine.backend=skiagl
+debug.sf.enable_gl_backpressure=0
+ro.surface_flinger.game_default_frame_rate_override=60
 
 # Radio
 persist.vendor.radio.fd.counter=150
@@ -287,6 +308,8 @@ persist.vendor.mtk_ct_volte_support=3
 persist.vendor.mtk.volte.enable=1
 persist.vendor.vilte_support=1
 persist.vendor.viwifi_support=1
+ro.telephony.iwlan_operation_mode=AP-assisted
+ro.telephony.sim.count=2
 
 # TEE
 ro.vendor.mtk_tee_gp_support=1

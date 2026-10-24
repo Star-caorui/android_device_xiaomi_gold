@@ -13,6 +13,7 @@ bluetooth.profile.hid.host.enabled=true
 bluetooth.profile.opp.enabled=true
 bluetooth.profile.pan.nap.enabled=true
 bluetooth.profile.pan.panu.enabled=true
+bluetooth.profile.sap.server.enabled=true
 
 # Identify as stock OS3.0.5.0.VNQMIXM: its build id, and the fingerprints stock's vendor, vendor_dlkm,
 # odm_dlkm and system_dlkm give; the unit's own fingerprint and odm's come with its SKU below. system,
