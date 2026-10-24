@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.gold.nrdc;
+package com.udp0.betterr.aosp.nrdc;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

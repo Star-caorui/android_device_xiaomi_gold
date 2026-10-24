@@ -4,7 +4,7 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.lineageos.gold.networkstack">
+    package="com.android.networkstack.overlay.gold">
     <application android:hasCode="false" />
     <overlay
         android:targetPackage="com.android.networkstack"
