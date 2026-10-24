@@ -110,6 +110,7 @@ PRODUCT_PACKAGES += \
     libvolumesw
 
 PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.audio.low_latency.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.audio.low_latency.xml \
     frameworks/native/data/etc/android.software.midi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.midi.xml
 
 PRODUCT_COPY_FILES += \
@@ -394,6 +395,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(foreach f,focaltech_ts_fw_CSOT.bin focaltech_ts_fw_CSOT_mask0x01.bin focaltech_ts_fw_TianMa.bin goodix_cfg_group.bin gt9916r_ts_fw_tm.bin, \
         vendor/xiaomi/gold/proprietary/vendor/firmware/$(f):$(TARGET_COPY_OUT_RECOVERY)/root/vendor/firmware/$(f))
+
+# Verified boot
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.software.verified_boot.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.verified_boot.xml
 
 # Vibrator
 $(call soong_config_set_bool,mediatek_vibrator,supports_effects,true)
