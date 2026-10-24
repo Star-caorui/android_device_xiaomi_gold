@@ -1,5 +1,6 @@
 <manifest version="8.0" type="device" target-level="202404">
-    <!-- Core HALs; source compatibility services remain where stock blobs are not used. -->
+    <!-- The HALs of the stock services taken here, as stock's vendor/etc/vintf/manifest.xml
+         (OS3.0.5.0.VNQMIXM) declares them. -->
     <hal format="aidl">
         <name>android.hardware.soundtrigger3</name>
         <version>2</version>
@@ -9,8 +10,6 @@
         <name>vendor.mediatek.hardware.audio</name>
         <fqname>IMtkAudio/default</fqname>
     </hal>
-
-    <!-- Blob-backed HALs as declared by OS3.0.5.0.VNQMIXM. -->
     <hal format="aidl">
         <name>android.hardware.camera.provider</name>
         <version>3</version>
