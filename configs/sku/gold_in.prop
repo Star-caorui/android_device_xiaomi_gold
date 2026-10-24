@@ -29,3 +29,7 @@ ro.product.odm.marketname=Redmi Note 13 5G
 
 # Camcorder profiles for the cameras with an ultrawide: 2 is the ultrawide, 3 the 2 MP macro
 ro.media.xml_variant.profiles=_V1_0_uwm
+
+# Stock's build fingerprint for this unit, as its /odm/etc/build_gold_in.prop gives it
+ro.build.fingerprint=Redmi/gold_in_global/gold:15/AP3A.240905.015.A2/OS3.0.5.0.VNQMIXM:user/release-keys
+ro.odm.build.fingerprint=Redmi/gold_in_global/gold:15/AP3A.240905.015.A2/OS3.0.5.0.VNQMIXM:user/release-keys

@@ -25,3 +25,7 @@ ro.product.odm.model=2312DRAABC
 ro.product.odm.cert=2312DRAABC
 ro.product.odm.name=gold
 ro.product.odm.marketname=Redmi Note 13 5G
+
+# Stock's build fingerprint for this unit, as its /odm/etc/build_gold_cn.prop gives it
+ro.build.fingerprint=Redmi/gold/gold:15/AP3A.240905.015.A2/OS3.0.5.0.VNQMIXM:user/release-keys
+ro.odm.build.fingerprint=Redmi/gold/gold:15/AP3A.240905.015.A2/OS3.0.5.0.VNQMIXM:user/release-keys
