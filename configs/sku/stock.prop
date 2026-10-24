@@ -1,0 +1,66 @@
+# Stock OS3.0.5.0.VNQMIXM's identity, the same on every unit, from the build.prop of each of its
+# partitions and of its boot ramdisk. product.prop imports this, then the unit's SKU file, which sets
+# what stock's vendor and odm import for that SKU. system, system_ext and product keep this build's
+# fingerprints and build ids: the package manager tells an update by the partition fingerprints.
+ro.product.property_source_order=odm,vendor,product,system
+ro.build.id=AP3A.240905.015.A2
+ro.build.flavor=missi-user
+ro.build.product=missi
+ro.bootimage.build.fingerprint=Redmi/vnd_gold/gold:15/AP3A.240905.015.A2/OS3.0.5.0.VNQMIXM:user/release-keys
+ro.bootimage.build.id=AP3A.240905.015.A2
+
+# system
+ro.product.system.brand=Android
+ro.product.system.device=generic
+ro.product.system.manufacturer=Xiaomi
+ro.product.system.model=mainline
+ro.product.system.name=mainline
+
+# system_ext
+ro.product.system_ext.brand=Xiaomi
+ro.product.system_ext.device=missi
+ro.product.system_ext.manufacturer=Xiaomi
+ro.product.system_ext.model=missi
+ro.product.system_ext.name=missi
+ro.product.system_ext.marketname=
+
+# product
+ro.product.product.brand=Xiaomi
+ro.product.product.device=missi
+ro.product.product.manufacturer=Xiaomi
+ro.product.product.model=miproduct
+ro.product.product.name=gold
+ro.product.product.marketname=
+
+# vendor and odm: the rest comes with the SKU
+ro.product.vendor.manufacturer=Xiaomi
+ro.product.odm.manufacturer=Xiaomi
+ro.vendor.build.id=AP3A.240905.015.A2
+ro.odm.build.id=AP3A.240905.015.A2
+
+# vendor_dlkm
+ro.product.vendor_dlkm.brand=Redmi
+ro.product.vendor_dlkm.device=gold
+ro.product.vendor_dlkm.manufacturer=Xiaomi
+ro.product.vendor_dlkm.model=gold
+ro.product.vendor_dlkm.name=vnd_gold
+ro.vendor_dlkm.build.fingerprint=Redmi/vnd_gold/gold:15/AP3A.240905.015.A2/OS3.0.5.0.VNQMIXM:user/release-keys
+ro.vendor_dlkm.build.id=AP3A.240905.015.A2
+
+# odm_dlkm
+ro.product.odm_dlkm.brand=Redmi
+ro.product.odm_dlkm.device=gold
+ro.product.odm_dlkm.manufacturer=Xiaomi
+ro.product.odm_dlkm.model=gold
+ro.product.odm_dlkm.name=vnd_gold
+ro.odm_dlkm.build.fingerprint=Redmi/vnd_gold/gold:15/AP3A.240905.015.A2/OS3.0.5.0.VNQMIXM:user/release-keys
+ro.odm_dlkm.build.id=AP3A.240905.015.A2
+
+# system_dlkm
+ro.product.system_dlkm.brand=Redmi
+ro.product.system_dlkm.device=gold
+ro.product.system_dlkm.manufacturer=Xiaomi
+ro.product.system_dlkm.model=gold
+ro.product.system_dlkm.name=vnd_gold
+ro.system_dlkm.build.fingerprint=Redmi/vnd_gold/gold:15/AP3A.240905.015.A2/OS3.0.5.0.VNQMIXM:user/release-keys
+ro.system_dlkm.build.id=AP3A.240905.015.A2

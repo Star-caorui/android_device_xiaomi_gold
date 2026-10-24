@@ -15,20 +15,9 @@ bluetooth.profile.pan.nap.enabled=true
 bluetooth.profile.pan.panu.enabled=true
 bluetooth.profile.sap.server.enabled=true
 
-# Identify as stock OS3.0.5.0.VNQMIXM: its build id, and the build ids and fingerprints stock's vendor,
-# odm, vendor_dlkm, odm_dlkm and system_dlkm give; the unit's own fingerprint and odm's come with its
-# SKU below. system, system_ext and product keep this build's: the package manager tells an update by
-# their fingerprints.
-ro.build.id=AP3A.240905.015.A2
-ro.vendor.build.id=AP3A.240905.015.A2
-ro.odm.build.id=AP3A.240905.015.A2
-ro.vendor_dlkm.build.id=AP3A.240905.015.A2
-ro.odm_dlkm.build.id=AP3A.240905.015.A2
-ro.system_dlkm.build.id=AP3A.240905.015.A2
-ro.vendor.build.fingerprint=Redmi/vnd_gold/gold:15/AP3A.240905.015.A2/OS3.0.5.0.VNQMIXM:user/release-keys
-ro.vendor_dlkm.build.fingerprint=Redmi/vnd_gold/gold:15/AP3A.240905.015.A2/OS3.0.5.0.VNQMIXM:user/release-keys
-ro.odm_dlkm.build.fingerprint=Redmi/vnd_gold/gold:15/AP3A.240905.015.A2/OS3.0.5.0.VNQMIXM:user/release-keys
-ro.system_dlkm.build.fingerprint=Redmi/vnd_gold/gold:15/AP3A.240905.015.A2/OS3.0.5.0.VNQMIXM:user/release-keys
+# Identify as stock OS3.0.5.0.VNQMIXM, partition by partition, then as the unit's SKU, as stock's
+# vendor and odm import theirs
+import /product/etc/sku/stock.prop
 
 # Device specific properties
 import /product/etc/sku/${ro.boot.product.hardware.sku}.prop

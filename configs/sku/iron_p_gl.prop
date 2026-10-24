@@ -8,11 +8,6 @@ ro.product.model=2312DRAF3G
 ro.product.name=iron_p_global
 ro.product.marketname=2312DRAF3G
 ro.product.board=iron
-ro.product.product.brand=POCO
-ro.product.product.device=gold
-ro.product.product.manufacturer=Xiaomi
-ro.product.product.model=2312DRAF3G
-ro.product.product.name=iron_p_global
 ro.product.vendor.brand=POCO
 ro.product.vendor.device=iron
 ro.product.vendor.manufacturer=Xiaomi
@@ -28,6 +23,7 @@ ro.product.odm.cert=2312DRAF3G
 ro.product.odm.name=iron_p_global
 ro.product.odm.marketname=2312DRAF3G
 
-# Stock's build fingerprint for this unit, as its /odm/etc/build_iron_p_gl.prop gives it
+# Stock's build fingerprint for this unit, as its /vendor/build_iron_p_gl.prop and /odm/etc/build_iron_p_gl.prop give it
 ro.build.fingerprint=POCO/iron_p_global/iron:15/AP3A.240905.015.A2/OS3.0.5.0.VNQMIXM:user/release-keys
 ro.odm.build.fingerprint=POCO/iron_p_global/iron:15/AP3A.240905.015.A2/OS3.0.5.0.VNQMIXM:user/release-keys
+ro.vendor.build.fingerprint=POCO/iron_p_global/iron:15/AP3A.240905.015.A2/OS3.0.5.0.VNQMIXM:user/release-keys

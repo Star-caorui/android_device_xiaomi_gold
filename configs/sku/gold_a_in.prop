@@ -7,11 +7,6 @@ ro.product.model=2312FRAFDI
 ro.product.name=gold_a_in_global
 ro.product.marketname=POCO X6 Neo 5G
 ro.product.board=gold
-ro.product.product.brand=POCO
-ro.product.product.device=gold
-ro.product.product.manufacturer=Xiaomi
-ro.product.product.model=2312FRAFDI
-ro.product.product.name=gold_a_in_global
 ro.product.vendor.brand=POCO
 ro.product.vendor.device=gold
 ro.product.vendor.manufacturer=Xiaomi
@@ -27,6 +22,7 @@ ro.product.odm.cert=2312FRAFDI
 ro.product.odm.name=gold_a_in_global
 ro.product.odm.marketname=POCO X6 Neo 5G
 
-# Stock's build fingerprint for this unit, as its /odm/etc/build_gold_a_in.prop gives it
+# Stock's build fingerprint for this unit, as its /vendor/build_gold_a_in.prop and /odm/etc/build_gold_a_in.prop give it
 ro.build.fingerprint=POCO/gold_a_in_global/gold:15/AP3A.240905.015.A2/OS3.0.5.0.VNQMIXM:user/release-keys
 ro.odm.build.fingerprint=POCO/gold_a_in_global/gold:15/AP3A.240905.015.A2/OS3.0.5.0.VNQMIXM:user/release-keys
+ro.vendor.build.fingerprint=POCO/gold_a_in_global/gold:15/AP3A.240905.015.A2/OS3.0.5.0.VNQMIXM:user/release-keys
