@@ -261,11 +261,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     SystemUIOverlayGold \
     FrameworkResOverlayGold \
-    LauncherOverlayGold \
     TetheringConfigOverlay \
     NetworkStackOverlayGold \
     SettingsResOverlayGold \
-    UpdaterOverlayGold \
     WifiOverlay
 
 PRODUCT_PACKAGES += \

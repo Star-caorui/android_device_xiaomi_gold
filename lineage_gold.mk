@@ -25,3 +25,12 @@ PRODUCT_BRAND := Redmi
 PRODUCT_MODEL := 2312DRAABG
 
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
+
+# LineageOS's own apps, which PixelOS does not have: Trebuchet and the
+# updater, with the list of published builds
+PRODUCT_PACKAGES += \
+    LauncherOverlayGold \
+    UpdaterOverlayGold
+
+PRODUCT_PRODUCT_PROPERTIES += \
+    lineage.updater.uri=https://raw.githubusercontent.com/Star-caorui/lineageos-gold/main/updates/{incr}.json
