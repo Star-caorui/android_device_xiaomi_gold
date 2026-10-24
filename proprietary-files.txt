@@ -1922,10 +1922,12 @@ odm/etc/permissions/sku_iron_gl/android.hardware.nfc.hce.xml
 odm/etc/permissions/sku_iron_gl/android.hardware.nfc.hcef.xml
 odm/etc/permissions/sku_iron_gl/android.hardware.nfc.uicc.xml
 odm/etc/permissions/sku_iron_gl/android.hardware.nfc.xml
+odm/etc/permissions/sku_iron_gl/android.hardware.se.omapi.uicc.xml
 odm/etc/permissions/sku_iron_p_gl/android.hardware.nfc.hce.xml
 odm/etc/permissions/sku_iron_p_gl/android.hardware.nfc.hcef.xml
 odm/etc/permissions/sku_iron_p_gl/android.hardware.nfc.uicc.xml
 odm/etc/permissions/sku_iron_p_gl/android.hardware.nfc.xml
+odm/etc/permissions/sku_iron_p_gl/android.hardware.se.omapi.uicc.xml
 odm/etc/vintf/manifest_iron_gl.xml
 odm/etc/vintf/manifest_iron_p_gl.xml
 
