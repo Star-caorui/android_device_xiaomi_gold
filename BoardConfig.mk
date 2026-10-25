@@ -7,6 +7,10 @@ DEVICE_PATH := device/xiaomi/gold
 
 # Virtual A/B
 AB_OTA_UPDATER := true
+# The device the update package is for. The tools would otherwise take the first
+# ro.product.device they find in the partitions' properties, and product's is stock's
+# missi; recovery says gold on every unit.
+TARGET_OTA_ASSERT_DEVICE := gold
 AB_OTA_PARTITIONS := \
     dtbo \
     odm_dlkm \
