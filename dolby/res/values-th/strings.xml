@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">ขยายมิติเสียงผ่านลำโพงของโทรศัพท์</string>
     <string name="dolby_hp_virtualizer">จำลองเสียงเซอร์ราวด์สำหรับหูฟัง</string>
     <string name="dolby_hp_virtualizer_summary">จำลองระบบเสียงรอบทิศทางในหูฟังที่เชื่อมต่อ</string>
-    <string name="dolby_stereo_widening">ขยายสเตอริโอ</string>
-    <string name="dolby_stereo_widening_summary">ขยายมิติเวทีเสียงสเตอริโอให้กว้างขึ้น</string>
     <string name="dolby_volume_leveler">ปรับระดับเสียงให้คงที่</string>
     <string name="dolby_volume_leveler_summary">รักษาระดับความดังของเสียงให้สม่ำเสมอในทุกสื่อ</string>
     <string name="dolby_connect_headphones">เชื่อมต่อหูฟัง</string>

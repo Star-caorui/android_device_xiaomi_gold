@@ -123,7 +123,6 @@ class DolbyController private constructor(private val context: Context) {
         dolbyAudioEffect?.setDapParameter(DsParam.DIALOGUE_ENHANCER_AMOUNT, deAmount, baseId)
         dolbyAudioEffect?.setDapParameter(DsParam.DIALOGUE_ENHANCER_ENABLE, deAmount > 0, baseId)
         dolbyAudioEffect?.setDapParameter(DsParam.BASS_ENHANCER_ENABLE, preferenceStore.bassEnhancerEnabled, baseId)
-        dolbyAudioEffect?.setDapParameter(DsParam.STEREO_WIDENING_AMOUNT, preferenceStore.stereoWideningAmount, baseId)
         dolbyAudioEffect?.setDapParameter(DsParam.VOLUME_LEVELER_ENABLE, preferenceStore.volumeLevelerEnabled, baseId)
         dolbyAudioEffect?.setDapParameter(DsParam.HEADPHONE_VIRTUALIZER, preferenceStore.headphoneVirtEnabled, baseId)
         dolbyAudioEffect?.setDapParameter(DsParam.SPEAKER_VIRTUALIZER, preferenceStore.speakerVirtEnabled, baseId)
@@ -212,17 +211,6 @@ class DolbyController private constructor(private val context: Context) {
             preferenceStore.bassEnhancerEnabled = value
             checkEffectAndRun {
                 dolbyAudioEffect?.setDapParameter(DsParam.BASS_ENHANCER_ENABLE, value, currentBaseProfileId)
-            }
-        }
-
-    var stereoWideningAmount: Int
-        get() = checkEffectAndRun {
-            dolbyAudioEffect?.getDapParameterInt(DsParam.STEREO_WIDENING_AMOUNT, currentBaseProfileId)
-        } ?: preferenceStore.stereoWideningAmount
-        set(value) {
-            preferenceStore.stereoWideningAmount = value
-            checkEffectAndRun {
-                dolbyAudioEffect?.setDapParameter(DsParam.STEREO_WIDENING_AMOUNT, value, currentBaseProfileId)
             }
         }
 

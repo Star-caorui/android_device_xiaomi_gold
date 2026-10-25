@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">يوسع نطاق المسرح الصوتي عبر مكبرات صوت الهاتف</string>
     <string name="dolby_hp_virtualizer">محاكاة الصوت المحيطي لسماعات الرأس</string>
     <string name="dolby_hp_virtualizer_summary">يحاكي الصوت المحيطي في سماعات الرأس المتصلة</string>
-    <string name="dolby_stereo_widening">توسيع الاستريو</string>
-    <string name="dolby_stereo_widening_summary">يوسع المجال الصوتي للاستريو</string>
     <string name="dolby_volume_leveler">تسوية مستوى الصوت</string>
     <string name="dolby_volume_leveler_summary">يحافظ على مستوى صوت ثابت عبر مختلف الوسائط</string>
     <string name="dolby_connect_headphones">قم بتوصيل سماعات الرأس</string>

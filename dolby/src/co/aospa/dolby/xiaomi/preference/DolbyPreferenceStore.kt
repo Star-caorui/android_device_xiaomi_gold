@@ -39,10 +39,6 @@ class DolbyPreferenceStore(context: Context) {
         get() = getProfileBoolean(DolbyConstants.PREF_BASS, false)
         set(value) = setProfileBoolean(DolbyConstants.PREF_BASS, value)
 
-    var stereoWideningAmount: Int
-        get() = getProfileInt(DolbyConstants.PREF_STEREO, 0)
-        set(value) = setProfileInt(DolbyConstants.PREF_STEREO, value)
-
     var volumeLevelerEnabled: Boolean
         get() = getProfileBoolean(DolbyConstants.PREF_VOLUME, false)
         set(value) = setProfileBoolean(DolbyConstants.PREF_VOLUME, value)
@@ -76,7 +72,6 @@ class DolbyPreferenceStore(context: Context) {
             "${DolbyConstants.PREF_IEQ}_$profileId",
             "${DolbyConstants.PREF_DIALOGUE}_$profileId",
             "${DolbyConstants.PREF_BASS}_$profileId",
-            "${DolbyConstants.PREF_STEREO}_$profileId",
             "${DolbyConstants.PREF_VOLUME}_$profileId",
             "${DolbyConstants.PREF_HP_VIRTUALIZER}_$profileId",
             "${DolbyConstants.PREF_SPK_VIRTUALIZER}_$profileId"

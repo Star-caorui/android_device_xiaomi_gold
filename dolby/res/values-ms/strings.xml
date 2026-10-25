@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">Memperluas pentas bunyi melalui pembesar suara telefon</string>
     <string name="dolby_hp_virtualizer">Maya fon kepala</string>
     <string name="dolby_hp_virtualizer_summary">Menyerupai bunyi sekeliling dalam fon kepala yang disambungkan</string>
-    <string name="dolby_stereo_widening">Peluasan stereo</string>
-    <string name="dolby_stereo_widening_summary">Memperluaskan medan bunyi stereo</string>
     <string name="dolby_volume_leveler">Penyamarata kelantangan</string>
     <string name="dolby_volume_leveler_summary">Mengekalkan kelantangan yang konsisten merentas media</string>
     <string name="dolby_connect_headphones">Sambungkan fon kepala</string>

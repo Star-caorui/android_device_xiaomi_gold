@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">Разширява звуковата сцена през високоговорителите на телефона</string>
     <string name="dolby_hp_virtualizer">Виртуализация на слушалките</string>
     <string name="dolby_hp_virtualizer_summary">Симулира съраунд звук в свързаните слушалки</string>
-    <string name="dolby_stereo_widening">Разширяване на стереото</string>
-    <string name="dolby_stereo_widening_summary">Разширява полето на стереозвука</string>
     <string name="dolby_volume_leveler">Изравняване на силата на звука</string>
     <string name="dolby_volume_leveler_summary">Поддържа постоянна сила на звука при различно съдържание</string>
     <string name="dolby_connect_headphones">Свържете слушалки</string>

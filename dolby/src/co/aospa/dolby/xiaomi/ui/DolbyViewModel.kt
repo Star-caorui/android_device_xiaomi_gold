@@ -72,9 +72,6 @@ class DolbyViewModel(application: Application) : AndroidViewModel(application) {
     private val _headphoneVirtEnabled = MutableStateFlow(dolbyController.headphoneVirtEnabled)
     val headphoneVirtEnabled: StateFlow<Boolean> = _headphoneVirtEnabled.asStateFlow()
 
-    private val _stereoWideningAmount = MutableStateFlow(dolbyController.stereoWideningAmount)
-    val stereoWideningAmount: StateFlow<Int> = _stereoWideningAmount.asStateFlow()
-
     private val _bassEnhancerEnabled = MutableStateFlow(dolbyController.bassEnhancerEnabled)
     val bassEnhancerEnabled: StateFlow<Boolean> = _bassEnhancerEnabled.asStateFlow()
 
@@ -163,11 +160,6 @@ class DolbyViewModel(application: Application) : AndroidViewModel(application) {
         _headphoneVirtEnabled.value = enabled
     }
 
-    fun setStereoWideningAmount(amount: Int) {
-        dolbyController.stereoWideningAmount = amount
-        _stereoWideningAmount.value = amount
-    }
-
     fun setDialogueEnhancerAmount(amount: Int) {
         dolbyController.dialogueEnhancerAmount = amount
         _dialogueEnhancerAmount.value = amount
@@ -197,7 +189,6 @@ class DolbyViewModel(application: Application) : AndroidViewModel(application) {
         editor.putInt("${DolbyConstants.PREF_IEQ}_$newId", dolbyController.ieqPreset)
         editor.putInt("${DolbyConstants.PREF_DIALOGUE}_$newId", dolbyController.dialogueEnhancerAmount)
         editor.putBoolean("${DolbyConstants.PREF_BASS}_$newId", dolbyController.bassEnhancerEnabled)
-        editor.putInt("${DolbyConstants.PREF_STEREO}_$newId", dolbyController.stereoWideningAmount)
         editor.putBoolean("${DolbyConstants.PREF_VOLUME}_$newId", dolbyController.volumeLevelerEnabled)
         editor.putBoolean("${DolbyConstants.PREF_HP_VIRTUALIZER}_$newId", dolbyController.headphoneVirtEnabled)
         editor.putBoolean("${DolbyConstants.PREF_SPK_VIRTUALIZER}_$newId", dolbyController.speakerVirtEnabled)
@@ -231,7 +222,6 @@ class DolbyViewModel(application: Application) : AndroidViewModel(application) {
         _ieqPreset.value = dolbyController.ieqPreset
         _dialogueEnhancerAmount.value = dolbyController.dialogueEnhancerAmount
         _bassEnhancerEnabled.value = dolbyController.bassEnhancerEnabled
-        _stereoWideningAmount.value = dolbyController.stereoWideningAmount
         _volumeLevelerEnabled.value = dolbyController.volumeLevelerEnabled
         _headphoneVirtEnabled.value = dolbyController.headphoneVirtEnabled
         _speakerVirtEnabled.value = dolbyController.speakerVirtEnabled

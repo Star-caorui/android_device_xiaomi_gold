@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">스마트폰 스피커의 음장을 확장합니다</string>
     <string name="dolby_hp_virtualizer">헤드폰 가상화</string>
     <string name="dolby_hp_virtualizer_summary">연결된 헤드폰에서 서라운드 입체 음향을 구현합니다</string>
-    <string name="dolby_stereo_widening">스테레오 확장</string>
-    <string name="dolby_stereo_widening_summary">스테레오 음향 공간을 넓힙니다</string>
     <string name="dolby_volume_leveler">볼륨 레벨러</string>
     <string name="dolby_volume_leveler_summary">다양한 미디어에서 일관된 음량을 유지합니다</string>
     <string name="dolby_connect_headphones">헤드폰 연결</string>

@@ -19,8 +19,7 @@ class DolbyConstants {
         DIALOGUE_ENHANCER_ENABLE(105),
         DIALOGUE_ENHANCER_AMOUNT(108),
         GEQ_BAND_GAINS(110, 20),
-        BASS_ENHANCER_ENABLE(111),
-        STEREO_WIDENING_AMOUNT(113);
+        BASS_ENHANCER_ENABLE(111);
 
         override fun toString(): String = "${name}(${id})"
     }
@@ -35,7 +34,6 @@ class DolbyConstants {
         const val PREF_IEQ = "dolby_ieq"
         const val PREF_DIALOGUE = "dolby_dialogue"
         const val PREF_BASS = "dolby_bass"
-        const val PREF_STEREO = "dolby_stereo"
         const val PREF_VOLUME = "dolby_volume"
         const val PREF_HP_VIRTUALIZER = "dolby_hp_virtualizer"
         const val PREF_SPK_VIRTUALIZER = "dolby_spk_virtualizer"

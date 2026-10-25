@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">Telefon hoparlörleri aracılığıyla ses sahnesini genişletir</string>
     <string name="dolby_hp_virtualizer">Kulaklık sanallaştırma</string>
     <string name="dolby_hp_virtualizer_summary">Bağlı kulaklıklarda çevresel ses simülasyonu yapar</string>
-    <string name="dolby_stereo_widening">Stereo genişletme</string>
-    <string name="dolby_stereo_widening_summary">Stereo ses alanını genişletir</string>
     <string name="dolby_volume_leveler">Ses seviyeleyici</string>
     <string name="dolby_volume_leveler_summary">Farklı medyalarda tutarlı bir ses seviyesi korur</string>
     <string name="dolby_connect_headphones">Kulaklık bağlayın</string>

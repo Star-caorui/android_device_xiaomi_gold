@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">Rozszerza scenę dźwiękową przez głośniki telefonu</string>
     <string name="dolby_hp_virtualizer">Wirtualizacja słuchawek</string>
     <string name="dolby_hp_virtualizer_summary">Symuluje dźwięk przestrzenny w podłączonych słuchawkach</string>
-    <string name="dolby_stereo_widening">Poszerzenie stereo</string>
-    <string name="dolby_stereo_widening_summary">Rozszerza pole dźwięku stereo</string>
     <string name="dolby_volume_leveler">Wyrównanie głośności</string>
     <string name="dolby_volume_leveler_summary">Utrzymuje stałą głośność w różnych multimediach</string>
     <string name="dolby_connect_headphones">Podłącz słuchawki</string>

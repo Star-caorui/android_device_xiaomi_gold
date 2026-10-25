@@ -381,7 +381,7 @@ private fun CreateProfileDialog(
         0 to stringResource(R.string.dolby_profile_dynamic),
         1 to stringResource(R.string.dolby_profile_video),
         2 to stringResource(R.string.dolby_profile_music),
-        8 to stringResource(R.string.dolby_profile_voice)
+        3 to stringResource(R.string.dolby_profile_voice)
     )
 
     AlertDialog(

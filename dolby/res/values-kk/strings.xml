@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">Телефон динамиктері арқылы дыбыс сахнасын кеңейтеді</string>
     <string name="dolby_hp_virtualizer">Құлаққапты виртуалдау</string>
     <string name="dolby_hp_virtualizer_summary">Қосылған құлаққапта көлемді дыбысты имитациялайды</string>
-    <string name="dolby_stereo_widening">Стереоны кеңейту</string>
-    <string name="dolby_stereo_widening_summary">Стерео дыбыс өрісін кеңейтеді</string>
     <string name="dolby_volume_leveler">Дыбыс деңгейін теңестіруші</string>
     <string name="dolby_volume_leveler_summary">Барлық медиада біркелкі дыбыс деңгейін сақтайды</string>
     <string name="dolby_connect_headphones">Құлаққапты қосыңыз</string>

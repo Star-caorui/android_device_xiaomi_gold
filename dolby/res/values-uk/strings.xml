@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">Розширює звукову сцену динаміків телефону</string>
     <string name="dolby_hp_virtualizer">Віртуалізація навушників</string>
     <string name="dolby_hp_virtualizer_summary">Створює об\'ємний звук у підключених навушниках</string>
-    <string name="dolby_stereo_widening">Розширення стерео</string>
-    <string name="dolby_stereo_widening_summary">Розширює поле стереозвуку</string>
     <string name="dolby_volume_leveler">Вирівнювання гучності</string>
     <string name="dolby_volume_leveler_summary">Підтримує постійний рівень гучності для всіх медіа</string>
     <string name="dolby_connect_headphones">Підключіть навушники</string>

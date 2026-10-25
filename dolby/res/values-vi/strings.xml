@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">Mở rộng không gian âm thanh qua loa ngoài điện thoại</string>
     <string name="dolby_hp_virtualizer">Ảo hóa tai nghe</string>
     <string name="dolby_hp_virtualizer_summary">Mô phỏng âm thanh vòm trên tai nghe được kết nối</string>
-    <string name="dolby_stereo_widening">Mở rộng âm thanh nổi</string>
-    <string name="dolby_stereo_widening_summary">Mở rộng trường âm thanh nổi</string>
     <string name="dolby_volume_leveler">Cân bằng âm lượng</string>
     <string name="dolby_volume_leveler_summary">Duy trì mức âm lượng ổn định trên mọi phương tiện</string>
     <string name="dolby_connect_headphones">Kết nối tai nghe</string>

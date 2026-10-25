@@ -33,7 +33,7 @@ class ProfileRepository private constructor(private val context: Context) {
             val iconRes = when (id) {
                 1 -> R.drawable.ic_dolby_movie
                 2 -> R.drawable.ic_dolby_music
-                8 -> R.drawable.ic_dolby_voice
+                3 -> R.drawable.ic_dolby_voice
                 else -> R.drawable.ic_dolby_dynamic
             }
             DolbyProfile(
@@ -176,7 +176,6 @@ class ProfileRepository private constructor(private val context: Context) {
                 "${DolbyConstants.PREF_IEQ}_$id",
                 "${DolbyConstants.PREF_DIALOGUE}_$id",
                 "${DolbyConstants.PREF_BASS}_$id",
-                "${DolbyConstants.PREF_STEREO}_$id",
                 "${DolbyConstants.PREF_VOLUME}_$id",
                 "${DolbyConstants.PREF_HP_VIRTUALIZER}_$id",
                 "${DolbyConstants.PREF_SPK_VIRTUALIZER}_$id"

@@ -17,7 +17,7 @@
         <item>0</item>
         <item>1</item>
         <item>2</item>
-        <item>8</item>
+        <item>3</item>
     </string-array>
 
     <string-array name="dolby_preset_entries" translatable="false">
@@ -84,22 +84,6 @@
         <item>6</item>
         <item>9</item>
         <item>12</item>
-    </string-array>
-
-    <string-array name="dolby_stereo_entries">
-        <item>@string/dolby_off</item>
-        <item>@string/dolby_low</item>
-        <item>@string/dolby_medium</item>
-        <item>@string/dolby_high</item>
-        <item>@string/dolby_max</item>
-    </string-array>
-
-    <string-array name="dolby_stereo_values">
-        <item>0</item>
-        <item>4</item>
-        <item>24</item>
-        <item>44</item>
-        <item>64</item>
     </string-array>
 
     <string-array name="dolby_ieq_entries">

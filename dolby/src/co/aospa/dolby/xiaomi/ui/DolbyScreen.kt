@@ -22,7 +22,6 @@ import androidx.compose.material.icons.outlined.Headphones
 import androidx.compose.material.icons.outlined.Movie
 import androidx.compose.material.icons.outlined.RestartAlt
 import androidx.compose.material.icons.outlined.Speaker
-import androidx.compose.material.icons.outlined.SurroundSound
 import androidx.compose.material.icons.outlined.Tune
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -63,7 +62,6 @@ fun DolbyScreen(
     val ieqPreset by viewModel.ieqPreset.collectAsStateWithLifecycle()
     val speakerVirtEnabled by viewModel.speakerVirtEnabled.collectAsStateWithLifecycle()
     val headphoneVirtEnabled by viewModel.headphoneVirtEnabled.collectAsStateWithLifecycle()
-    val stereoWideningAmount by viewModel.stereoWideningAmount.collectAsStateWithLifecycle()
     val dialogueEnhancerAmount by viewModel.dialogueEnhancerAmount.collectAsStateWithLifecycle()
     val bassEnhancerEnabled by viewModel.bassEnhancerEnabled.collectAsStateWithLifecycle()
     val volumeLevelerEnabled by viewModel.volumeLevelerEnabled.collectAsStateWithLifecycle()
@@ -73,8 +71,6 @@ fun DolbyScreen(
 
     val ieqEntries = stringArrayResource(R.array.dolby_ieq_entries)
     val ieqValues = stringArrayResource(R.array.dolby_ieq_values)
-    val stereoEntries = stringArrayResource(R.array.dolby_stereo_entries)
-    val stereoValues = stringArrayResource(R.array.dolby_stereo_values)
     val dialogueEntries = stringArrayResource(R.array.dolby_dialogue_entries)
     val dialogueValues = stringArrayResource(R.array.dolby_dialogue_values)
 
@@ -247,21 +243,6 @@ fun DolbyScreen(
                         }
                     }
                 }
-            )
-
-            // Stereo Widening
-            DiscreteSliderPreference(
-                title = stringResource(R.string.dolby_stereo_widening),
-                icon = {
-                    SettingsIcon(imageVector = Icons.Outlined.SurroundSound)
-                },
-                summary = stringResource(R.string.dolby_stereo_widening_summary),
-                values = remember(stereoValues) { stereoValues.map { it.toInt() } },
-                entries = remember(stereoEntries) { stereoEntries.toList() },
-                currentValue = stereoWideningAmount,
-                enabled = dsOn && !isOnSpeaker,
-                disabledSummary = if (isOnSpeaker) connectHeadphonesText else null,
-                onValueChangeFinished = { viewModel.setStereoWideningAmount(it) }
             )
 
             // Dialogue Enhancer

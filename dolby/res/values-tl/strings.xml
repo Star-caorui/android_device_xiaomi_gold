@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">Pinalalawak ang soundstage gamit ang mga speaker ng telepono</string>
     <string name="dolby_hp_virtualizer">Virtualization ng headphone</string>
     <string name="dolby_hp_virtualizer_summary">Ginagaya ang surround sound sa nakakonektang headphone</string>
-    <string name="dolby_stereo_widening">Pagpapalawak ng stereo</string>
-    <string name="dolby_stereo_widening_summary">Pinalalawak ang sound field ng stereo</string>
     <string name="dolby_volume_leveler">Pampantay ng volume</string>
     <string name="dolby_volume_leveler_summary">Pinapanatili ang pantay na lakas ng tunog sa lahat ng media</string>
     <string name="dolby_connect_headphones">Ikonekta ang headphone</string>

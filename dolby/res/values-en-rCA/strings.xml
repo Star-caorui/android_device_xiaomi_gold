@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">Widens soundstage through phone speakers</string>
     <string name="dolby_hp_virtualizer">Headphone virtualization</string>
     <string name="dolby_hp_virtualizer_summary">Simulates surround sound in connected headphones</string>
-    <string name="dolby_stereo_widening">Stereo widening</string>
-    <string name="dolby_stereo_widening_summary">Expands stereo sound field</string>
     <string name="dolby_volume_leveler">Volume leveller</string>
     <string name="dolby_volume_leveler_summary">Maintains consistent loudness across media</string>
     <string name="dolby_connect_headphones">Connect headphones</string>

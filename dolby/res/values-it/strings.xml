@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">Espande la scena sonora attraverso gli altoparlanti del telefono</string>
     <string name="dolby_hp_virtualizer">Virtualizzazione cuffie</string>
     <string name="dolby_hp_virtualizer_summary">Simula il suono surround nelle cuffie collegate</string>
-    <string name="dolby_stereo_widening">Espansione stereo</string>
-    <string name="dolby_stereo_widening_summary">Espande il campo sonoro stereo</string>
     <string name="dolby_volume_leveler">Livellatore di volume</string>
     <string name="dolby_volume_leveler_summary">Mantiene un volume coerente su tutti i contenuti multimediali</string>
     <string name="dolby_connect_headphones">Collega le cuffie</string>

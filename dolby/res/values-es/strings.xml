@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">Amplía el escenario sonoro a través de los altavoces del teléfono</string>
     <string name="dolby_hp_virtualizer">Virtualización de auriculares</string>
     <string name="dolby_hp_virtualizer_summary">Simula sonido envolvente en auriculares conectados</string>
-    <string name="dolby_stereo_widening">Ampliación estéreo</string>
-    <string name="dolby_stereo_widening_summary">Expande el campo sonoro estéreo</string>
     <string name="dolby_volume_leveler">Nivelador de volumen</string>
     <string name="dolby_volume_leveler_summary">Mantiene un volumen constante en todo el contenido multimedia</string>
     <string name="dolby_connect_headphones">Conectar auriculares</string>

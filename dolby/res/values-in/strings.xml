@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">Memperluas panggung suara melalui speaker ponsel</string>
     <string name="dolby_hp_virtualizer">Virtualisasi headphone</string>
     <string name="dolby_hp_virtualizer_summary">Mensimulasikan suara surround pada headphone yang terhubung</string>
-    <string name="dolby_stereo_widening">Pelebaran stereo</string>
-    <string name="dolby_stereo_widening_summary">Memperluas bidang suara stereo</string>
     <string name="dolby_volume_leveler">Penyeimbang volume</string>
     <string name="dolby_volume_leveler_summary">Menjaga kenyaringan tetap konsisten di seluruh media</string>
     <string name="dolby_connect_headphones">Sambungkan headphone</string>

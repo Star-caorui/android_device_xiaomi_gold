@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">फ़ोन स्पीकर के माध्यम से ध्वनि क्षेत्र को विस्तृत करता है</string>
     <string name="dolby_hp_virtualizer">हेडफ़ोन वर्चुअलाइज़र</string>
     <string name="dolby_hp_virtualizer_summary">कनेक्टेड हेडफ़ोन में सराउंड साउंड सिम्युलेट करता है</string>
-    <string name="dolby_stereo_widening">स्टीरियो वाइडनिंग</string>
-    <string name="dolby_stereo_widening_summary">स्टीरियो साउंड फ़ील्ड को विस्तृत करता है</string>
     <string name="dolby_volume_leveler">वॉल्यूम लेवलर</string>
     <string name="dolby_volume_leveler_summary">सभी मीडिया में एक समान वॉल्यूम बनाए रखता है</string>
     <string name="dolby_connect_headphones">हेडफ़ोन कनेक्ट करें</string>

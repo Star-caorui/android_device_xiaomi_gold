@@ -36,7 +36,6 @@ object DolbyConfigSerializer {
     private const val KEY_IEQ_PRESET = "ieq_preset"
     private const val KEY_DIALOGUE_AMOUNT = "dialogue_amount"
     private const val KEY_BASS_ENABLED = "bass_enabled"
-    private const val KEY_STEREO_AMOUNT = "stereo_amount"
     private const val KEY_VOLUME_ENABLED = "volume_enabled"
     private const val KEY_HP_VIRT_ENABLED = "hp_virt_enabled"
     private const val KEY_SPK_VIRT_ENABLED = "spk_virt_enabled"
@@ -64,8 +63,6 @@ object DolbyConfigSerializer {
                              else sharedPreferences.getInt("${DolbyConstants.PREF_DIALOGUE}_$profileId", 0)
         val bassEnabled = if (isCurrent) dolbyController.bassEnhancerEnabled
                           else sharedPreferences.getBoolean("${DolbyConstants.PREF_BASS}_$profileId", false)
-        val stereoAmount = if (isCurrent) dolbyController.stereoWideningAmount
-                           else sharedPreferences.getInt("${DolbyConstants.PREF_STEREO}_$profileId", 0)
         val volumeEnabled = if (isCurrent) dolbyController.volumeLevelerEnabled
                             else sharedPreferences.getBoolean("${DolbyConstants.PREF_VOLUME}_$profileId", false)
         val hpVirtEnabled = if (isCurrent) dolbyController.headphoneVirtEnabled
@@ -83,7 +80,6 @@ object DolbyConfigSerializer {
                 put(KEY_IEQ_PRESET, ieqPreset)
                 put(KEY_DIALOGUE_AMOUNT, dialogueAmount)
                 put(KEY_BASS_ENABLED, bassEnabled)
-                put(KEY_STEREO_AMOUNT, stereoAmount)
                 put(KEY_VOLUME_ENABLED, volumeEnabled)
                 put(KEY_HP_VIRT_ENABLED, hpVirtEnabled)
                 put(KEY_SPK_VIRT_ENABLED, spkVirtEnabled)
@@ -140,9 +136,6 @@ object DolbyConfigSerializer {
                 }
                 if (settingsObj.has(KEY_BASS_ENABLED)) {
                     editor.putBoolean("${DolbyConstants.PREF_BASS}_$newProfileId", settingsObj.getBoolean(KEY_BASS_ENABLED))
-                }
-                if (settingsObj.has(KEY_STEREO_AMOUNT)) {
-                    editor.putInt("${DolbyConstants.PREF_STEREO}_$newProfileId", settingsObj.getInt(KEY_STEREO_AMOUNT))
                 }
                 if (settingsObj.has(KEY_VOLUME_ENABLED)) {
                     editor.putBoolean("${DolbyConstants.PREF_VOLUME}_$newProfileId", settingsObj.getBoolean(KEY_VOLUME_ENABLED))

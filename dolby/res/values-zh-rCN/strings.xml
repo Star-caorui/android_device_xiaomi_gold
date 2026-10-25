@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">拓宽手机扬声器的声场表现</string>
     <string name="dolby_hp_virtualizer">耳机虚拟环绕声</string>
     <string name="dolby_hp_virtualizer_summary">在连接的耳机中模拟环绕立体声</string>
-    <string name="dolby_stereo_widening">立体声扩展</string>
-    <string name="dolby_stereo_widening_summary">扩大立体声音场</string>
     <string name="dolby_volume_leveler">音量平衡器</string>
     <string name="dolby_volume_leveler_summary">保持媒体播放音量均衡一致</string>
     <string name="dolby_connect_headphones">连接耳机</string>

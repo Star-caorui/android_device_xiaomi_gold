@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">Amplia o palco sonoro através dos alto-falantes do telefone</string>
     <string name="dolby_hp_virtualizer">Virtualização de fone de ouvido</string>
     <string name="dolby_hp_virtualizer_summary">Simula som surround nos fones de ouvido conectados</string>
-    <string name="dolby_stereo_widening">Ampliação estéreo</string>
-    <string name="dolby_stereo_widening_summary">Expande o campo sonoro estéreo</string>
     <string name="dolby_volume_leveler">Nivelador de volume</string>
     <string name="dolby_volume_leveler_summary">Mantém o volume consistente em todas as mídias</string>
     <string name="dolby_connect_headphones">Conectar fones de ouvido</string>

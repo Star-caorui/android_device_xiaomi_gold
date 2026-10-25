@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">Erweitert die Klangbühne über die Lautsprecher des Telefons</string>
     <string name="dolby_hp_virtualizer">Kopfhörer-Virtualisierung</string>
     <string name="dolby_hp_virtualizer_summary">Simuliert Surround-Sound in angeschlossenen Kopfhörern</string>
-    <string name="dolby_stereo_widening">Stereo-Erweiterung</string>
-    <string name="dolby_stereo_widening_summary">Erweitert das Stereo-Klangfeld</string>
     <string name="dolby_volume_leveler">Lautstärkeausgleich</string>
     <string name="dolby_volume_leveler_summary">Hält die Lautstärke über verschiedene Medien hinweg konstant</string>
     <string name="dolby_connect_headphones">Kopfhörer anschließen</string>

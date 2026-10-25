@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">スマホのスピーカーで音場の広がりを強化します</string>
     <string name="dolby_hp_virtualizer">ヘッドフォンバーチャライザー</string>
     <string name="dolby_hp_virtualizer_summary">接続中のヘッドフォンでサラウンド音響を再現します</string>
-    <string name="dolby_stereo_widening">ステレオ音場拡大</string>
-    <string name="dolby_stereo_widening_summary">ステレオサウンドの広がりを拡大します</string>
     <string name="dolby_volume_leveler">音量レベラー</string>
     <string name="dolby_volume_leveler_summary">メディア間の音量を均一に保ちます</string>
     <string name="dolby_connect_headphones">ヘッドフォンを接続してください</string>

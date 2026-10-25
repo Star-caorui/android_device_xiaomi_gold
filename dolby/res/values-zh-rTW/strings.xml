@@ -27,8 +27,6 @@
     <string name="dolby_spk_virtualizer_summary">拓寬手機揚聲器的音場表現</string>
     <string name="dolby_hp_virtualizer">耳機虛擬環繞聲</string>
     <string name="dolby_hp_virtualizer_summary">在連接的耳機中模擬環繞立體聲</string>
-    <string name="dolby_stereo_widening">立體聲擴展</string>
-    <string name="dolby_stereo_widening_summary">擴大立體聲音場</string>
     <string name="dolby_volume_leveler">音量等化器</string>
     <string name="dolby_volume_leveler_summary">保持各類媒體音量均衡一致</string>
     <string name="dolby_connect_headphones">連接耳機</string>
