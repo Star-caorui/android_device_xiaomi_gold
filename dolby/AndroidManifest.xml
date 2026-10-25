@@ -50,16 +50,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.CATEGORY_CONTENT_MUSIC" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
             <meta-data android:name="com.android.settings.category"
                        android:value="com.android.settings.category.ia.sound" />
-            <meta-data android:name="com.android.settings.icon"
-                       android:resource="@drawable/ic_dolby" />
-            <meta-data android:name="com.android.settings.icon_tintable"
-                       android:value="true" />
+            <meta-data android:name="com.android.settings.group_key"
+                       android:value="audio_category" />
             <meta-data android:name="com.android.settings.order"
                        android:value="-40" />
             <meta-data android:name="com.android.settings.summary_uri"
