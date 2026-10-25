@@ -13,6 +13,7 @@ import android.media.AudioDeviceInfo
 import android.media.AudioManager
 import android.media.AudioPlaybackConfiguration
 import android.media.AudioRecordingConfiguration
+import android.media.Spatializer
 import android.os.Handler
 import android.os.Looper
 import co.aospa.dolby.xiaomi.DolbyConstants.Companion.dlog
@@ -22,10 +23,13 @@ import co.aospa.dolby.xiaomi.DolbyConstants.DsParam
 import co.aospa.dolby.xiaomi.data.ProfileRepository
 import co.aospa.dolby.xiaomi.geq.data.EqualizerRepository
 import co.aospa.dolby.xiaomi.preference.DolbyPreferenceStore
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 
 class DolbyController private constructor(private val context: Context) {
 
     private val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+    private val spatializer = audioManager.spatializer
     private val preferenceStore = DolbyPreferenceStore(context)
     private val profileRepository by lazy { ProfileRepository.getInstance(context) }
     private var dolbyAudioEffect: DolbyAudioEffect? = null
@@ -53,6 +57,13 @@ class DolbyController private constructor(private val context: Context) {
         }
     }
 
+    // The spatializer makes a new effect each time it opens an output, so it starts over from
+    // its tuning file's defaults.
+    private val spatializerOutputListener =
+        Spatializer.OnSpatializerOutputChangedListener { _, output ->
+            if (output != 0) syncSpatializer()
+        }
+
     private val deviceCallback = object : AudioDeviceCallback() {
         override fun onAudioDevicesAdded(addedDevices: Array<out AudioDeviceInfo>?) {
             checkEffect()
@@ -68,6 +79,7 @@ class DolbyController private constructor(private val context: Context) {
         audioManager.registerAudioRecordingCallback(recordingCallback, handler)
         audioManager.registerAudioPlaybackCallback(playbackCallback, handler)
         audioManager.registerAudioDeviceCallback(deviceCallback, handler)
+        spatializer.setOnSpatializerOutputChangedListener(context.mainExecutor, spatializerOutputListener)
     }
 
     private fun initEffect() {
@@ -157,6 +169,7 @@ class DolbyController private constructor(private val context: Context) {
             checkEffectAndRun {
                 dolbyAudioEffect?.dsOn = value
             }
+            syncSpatializer()
         }
 
     var profile: Int
@@ -280,7 +293,27 @@ class DolbyController private constructor(private val context: Context) {
         checkEffectAndRun {
             dolbyAudioEffect?.setDapParameter(DsParam.GEQ_BAND_GAINS, current20BandGains, currentBaseProfileId)
         }
+        syncSpatializer()
     }
+
+    // Multichannel audio is spatialized by Dolby's spatializer effect after the DAP effect, and the
+    // spatializer has a profile and graphic equalizer of its own. Give it the current ones; with
+    // Dolby off, its equalizer is flat.
+    private fun syncSpatializer() {
+        if (spatializer.immersiveAudioLevel == Spatializer.SPATIALIZER_IMMERSIVE_LEVEL_NONE) return
+        val gains = if (preferenceStore.dsOn) current20BandGains else IntArray(current20BandGains.size)
+        try {
+            spatializer.setEffectParameter(SPATIALIZER_PARAM_PROFILE_ID, toBytes(intArrayOf(currentBaseProfileId)))
+            spatializer.setEffectParameter(SPATIALIZER_PARAM_GEQ_BAND_GAINS, toBytes(gains))
+        } catch (e: Exception) {
+            // The spatializer has no effect while it has no output.
+            dlog(TAG, "Spatializer not updated: ${e.message}")
+        }
+    }
+
+    private fun toBytes(values: IntArray): ByteArray =
+        ByteBuffer.allocate(values.size * Int.SIZE_BYTES).order(ByteOrder.nativeOrder())
+            .apply { values.forEach { putInt(it) } }.array()
 
     fun resetCurrentProfile() {
         val prof = profile
@@ -310,6 +343,10 @@ class DolbyController private constructor(private val context: Context) {
         private const val TAG = "DolbyController"
         private const val EFFECT_PRIORITY = 100
         private const val AUDIO_SESSION_GLOBAL = 0
+
+        // Dolby's spatializer parameters: a profile id, and the 20 graphic equalizer gains
+        private const val SPATIALIZER_PARAM_PROFILE_ID = 0x100
+        private const val SPATIALIZER_PARAM_GEQ_BAND_GAINS = 0x101
 
         @Volatile
         private var instance: DolbyController? = null
