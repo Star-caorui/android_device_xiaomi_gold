@@ -33,4 +33,4 @@ PRODUCT_PACKAGES += \
     UpdaterOverlayGold
 
 PRODUCT_PRODUCT_PROPERTIES += \
-    lineage.updater.uri=https://raw.githubusercontent.com/Star-caorui/lineageos-gold/main/updates/release-keys/{incr}.json
+    lineage.updater.uri=https://raw.githubusercontent.com/Star-caorui/lineageos-gold/main/updates/rk/{incr}.json
