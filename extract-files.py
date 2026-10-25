@@ -83,8 +83,9 @@ blob_fixups: blob_fixups_user_type = {
         .replace_needed('vendor.mediatek.hardware.bluetooth.audio-V1-ndk.so',
                         'vendor.mediatek.hardware.bluetooth.audio-V3-ndk.so'),
 
-    # Dolby's effect is an Android 15 binary as well and converts types the same way.
-    'vendor/lib64/soundfx/libswdapaidl.so': blob_fixup()
+    # Dolby's effects are Android 15 binaries as well and convert types the same way.
+    ('vendor/lib64/soundfx/libswdapaidl.so',
+     'vendor/lib64/soundfx/libswspatializeraidl.so'): blob_fixup()
         .replace_needed('libaudio_aidl_conversion_common_ndk.so',
                         'libaudio_aidl_conversion_common_ndk_prebuilt.so'),
 

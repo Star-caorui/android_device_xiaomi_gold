@@ -4,6 +4,7 @@ aaudio.mmap_policy=2
 audio.deep_buffer.media=true
 audio.offload.video=true
 audio.offload.min.duration.secs=30
+ro.audio.spatializer_enabled=true
 ro.audio.usb.period_us=16000
 ro.vendor.soundtrigger.dfs.support=1
 ro.config.media_vol_default=25
