@@ -1,5 +1,6 @@
 $(call inherit-product, hardware/mediatek/configs/properties/vendor_logtag.mk)
 
+# hardware/mediatek's file sets the same, but an inherited file is read only after this one.
 ifeq (eng,$(TARGET_BUILD_VARIANT))
 VENDOR_LOG_LEVEL := I
 else
