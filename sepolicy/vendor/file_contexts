@@ -17,13 +17,8 @@
 /dev/miev u:object_r:gold_miev_device:s0
 /dev/block/by-name/rescue u:object_r:cache_block_device:s0
 
-/dev/xiaomi-touch    u:object_r:gold_touch_device:s0
-
 # The socket stock's audio service start script asks init for.
 /dev/socket/audio_hw_socket    u:object_r:gold_audio_socket:s0
-
-# Touch gestures
-/(vendor|system/vendor)/bin/hw/vendor\.lineage\.touch-service\.gold    u:object_r:hal_lineage_touch_default_exec:s0
 
 # Neural networks service. The shared MediaTek policy labels the service by a name without "-legacy".
 /(vendor|system/vendor)/bin/hw/android\.hardware\.neuralnetworks-shim-service-mtk-legacy    u:object_r:mtk_hal_neuralnetworks_exec:s0

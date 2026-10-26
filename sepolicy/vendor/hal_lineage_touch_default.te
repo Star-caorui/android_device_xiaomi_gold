@@ -1,3 +1,0 @@
-# Single tap is switched with one xiaomi_touch ioctl.
-allow hal_lineage_touch_default gold_touch_device:chr_file rw_file_perms;
-allowxperm hal_lineage_touch_default gold_touch_device:chr_file ioctl 0x5400;

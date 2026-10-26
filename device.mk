@@ -398,10 +398,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.host.xml
 
-# Touch
-PRODUCT_PACKAGES += \
-    vendor.lineage.touch-service.gold
-
 # The touchscreen drivers ask for these when they start, also in recovery
 PRODUCT_COPY_FILES += \
     $(foreach f,focaltech_ts_fw_CSOT.bin focaltech_ts_fw_CSOT_mask0x01.bin focaltech_ts_fw_TianMa.bin goodix_cfg_group.bin gt9916r_ts_fw_tm.bin, \
