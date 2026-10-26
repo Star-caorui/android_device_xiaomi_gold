@@ -273,6 +273,11 @@ PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(DEVICE_PATH)/configs/media,$(TARGET_COPY_OUT_VENDOR)/etc)
 
 # Overlays
+# MediaTek's defaults first: hardware/mediatek picks the ones MT6833 takes, the telephony ones
+# with the vendor RIL. Ours below carry only what gold does differently.
+ENABLE_VENDOR_RIL_SERVICE := true
+$(call inherit-product, hardware/mediatek/overlay/mssi.mk)
+
 PRODUCT_PACKAGES += \
     SystemUIOverlayGold \
     FrameworkResOverlayGold \
@@ -325,14 +330,8 @@ PRODUCT_PACKAGES += \
 $(call inherit-product, hardware/mediatek/frameworks/mediatek-frameworks.mk)
 
 # IMS: the service, its helpers and the video call stack are taken from stock. The compatibility
-# jar supplies a telephony class they still use, and the overlays are MediaTek's own defaults.
+# jar supplies a telephony class they still use.
 $(call inherit-product, hardware/lineage/compat/frameworks/compat.mk)
-
-PRODUCT_PACKAGES += \
-    MssiCarrierConfigOverlay \
-    MssiFrameworkTelephony5gOverlay \
-    MssiFrameworkTelephonyOverlay \
-    MssiTelephonyOverlay
 
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/permissions/privapp-permissions-com.mediatek.ims.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-com.mediatek.ims.xml \
@@ -421,8 +420,7 @@ PRODUCT_PACKAGES += \
     hostapd \
     wlan_assistant \
     wpa_supplicant \
-    libwifi-hal-wrapper \
-    MssiWifiOverlay
+    libwifi-hal-wrapper
 
 PRODUCT_PACKAGES += \
     init.connectivity.rc \
