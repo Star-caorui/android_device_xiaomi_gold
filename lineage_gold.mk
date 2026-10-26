@@ -29,6 +29,9 @@ PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 # Shown in the LineageOS version in Settings: 24.0-<date>-UNOFFICIAL-Betterr-gold
 TARGET_UNOFFICIAL_BUILD_ID := Betterr
 
+# The Dolby app is the audio effects panel
+TARGET_EXCLUDES_AUDIOFX := true
+
 # LineageOS's own apps, which PixelOS does not have: Trebuchet and the
 # updater, with the list of published builds
 PRODUCT_PACKAGES += \
