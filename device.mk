@@ -265,6 +265,7 @@ PRODUCT_COPY_FILES += \
 
 # Overlays
 ENABLE_VENDOR_RIL_SERVICE := true
+TARGET_BOARD_PLATFORM := mt6833
 $(call inherit-product, hardware/mediatek/overlay/mssi.mk)
 
 PRODUCT_PACKAGES += \
