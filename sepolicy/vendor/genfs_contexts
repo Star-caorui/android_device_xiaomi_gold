@@ -21,13 +21,10 @@ genfscon sysfs /devices/platform/rt-pd-manager/typec/port0 u:object_r:sysfs_usb_
 
 # Wakeup-source names are consumed by the platform system_suspend service.
 genfscon sysfs /devices/platform/charger/power_supply/usb/wakeup u:object_r:sysfs_wakeup:s0
-genfscon sysfs /devices/platform/charger/power_supply/mtk-mst-hvdiv-chg/wakeup u:object_r:sysfs_wakeup:s0
-genfscon sysfs /devices/platform/charger/power_supply/mtk-slv-hvdiv-chg/wakeup u:object_r:sysfs_wakeup:s0
 genfscon sysfs /devices/platform/11e01000.i2c/i2c-5/5-0034/mt6360-chg.2.auto/wakeup u:object_r:sysfs_wakeup:s0
 genfscon sysfs /devices/platform/11e01000.i2c/i2c-5/5-0034/mt6360-chg.2.auto/power_supply/primary_chg/wakeup u:object_r:sysfs_wakeup:s0
 genfscon sysfs /devices/platform/11e02000.i2c/i2c-7/7-0066/power_supply/sc-cp-standalone/wakeup u:object_r:sysfs_wakeup:s0
 genfscon sysfs /devices/platform/11e02000.i2c/i2c-7/7-0051/power_supply/ln8000-charger/wakeup u:object_r:sysfs_wakeup:s0
-genfscon sysfs /devices/platform/battery-manager/power_supply/battery/wakeup u:object_r:sysfs_wakeup:s0
 genfscon sysfs /devices/platform/fingerprint/wakeup u:object_r:sysfs_wakeup:s0
 # "wakeup" above is a prefix match, so override the adjacent FPC control file.
 genfscon sysfs /devices/platform/fingerprint/wakeup_enable u:object_r:gold_sysfs_fingerprint:s0
