@@ -183,9 +183,6 @@ PRODUCT_PACKAGES += \
     fstab.mt6833 \
     fstab.mt6833.vendor_ramdisk
 
-PRODUCT_COPY_FILES += \
-    $(DEVICE_PATH)/init/fstab.enableswap:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.enableswap
-
 # GNSS
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.location.gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.location.gps.xml
@@ -241,10 +238,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     init.batterysecret.rc
 
-# Kernel module loading and cgroups
+# Kernel module loading
 PRODUCT_PACKAGES += \
-    init.mtkgki.rc \
-    init.cgroup.rc
+    init.mtkgki.rc
 
 # Keymint
 PRODUCT_PACKAGES += \
@@ -423,7 +419,6 @@ PRODUCT_PACKAGES += \
     libwifi-hal-wrapper
 
 PRODUCT_PACKAGES += \
-    init.connectivity.rc \
     init.connectivity.common.rc \
     init_connectivity.rc
 

@@ -73,8 +73,15 @@ vendor/etc/misound_res_spk.bin
 vendor/lib64/libbluetooth_mtk_pure.so
 
 # Audio (Configs)
+vendor/etc/a2dp_audio_policy_configuration.xml
+vendor/etc/a2dp_in_audio_policy_configuration.xml
+vendor/etc/audio_device.xml
+vendor/etc/audio_em.xml
+vendor/etc/audio_policy_configuration_bluetooth_legacy_hal.xml
 vendor/etc/aurisys_config.xml
 vendor/etc/aurisys_config_rv.xml
+vendor/etc/bluetooth_offload_audio_policy_configuration.xml
+vendor/etc/usb_audio_policy_configuration.xml
 vendor/etc/audio_param/AudioParamOptions.xml
 vendor/etc/audio_param/AudioParamOptions_vext.xml
 vendor/etc/audio_param/BtInfo_AudioParam.xml
@@ -1619,6 +1626,7 @@ odm/etc/camera/camerabooster.json
 vendor/lib64/hw/consumerir.common.so
 
 # Connectivity
+vendor/etc/init/hw/init.connectivity.rc
 vendor/bin/wmt_loader
 vendor/bin/wmt_launcher
 vendor/firmware/WMT_SOC.cfg
@@ -1653,6 +1661,10 @@ vendor/etc/init/fuelgauged_init.rc
 vendor/etc/init/fuelgauged_nvram_init.rc
 vendor/lib/libfgauge_gm30.so
 vendor/lib64/libfgauge_gm30.so
+
+# Init
+vendor/etc/fstab.enableswap
+vendor/etc/init/hw/init.cgroup.rc
 
 # Gatekeeper
 vendor/bin/hw/android.hardware.gatekeeper-service.mitee
@@ -1849,6 +1861,8 @@ vendor/lib/mt6833/libscltm.so:vendor/lib/libscltm.so
 
 # Media
 vendor/bin/v3avpud
+vendor/etc/media_codecs_performance.xml
+vendor/etc/mtk_platform_codecs_config.xml
 vendor/etc/init/v3avpud.rc
 vendor/lib64/mt6833/libmtk_drvb.so:vendor/lib64/libmtk_drvb.so
 vendor/lib64/AVCSecureVdecCA.so
@@ -2545,6 +2559,7 @@ vendor/etc/thermal-videochat.conf
 vendor/etc/thermald-devices.conf
 
 # WiFi
+vendor/etc/wifi/p2p_supplicant_overlay.conf
 vendor/lib64/libwifi-hal.so:vendor/lib64/libwifi-hal-mtk.so;FIX_SONAME
 vendor/firmware/soc2_2_ram_wifi_1a_1_hdr.bin
 vendor/firmware/soc2_2_ram_wifi_1_1_hdr.bin

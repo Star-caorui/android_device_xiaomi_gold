@@ -61,13 +61,6 @@ prebuilt_etc {
 }
 
 prebuilt_etc {
-    name: "init.connectivity.rc",
-    src: "init.connectivity.rc",
-    relative_install_path: "init/hw",
-    vendor: true,
-}
-
-prebuilt_etc {
     name: "init.connectivity.common.rc",
     src: "init.connectivity.common.rc",
     relative_install_path: "init/hw",
@@ -85,13 +78,6 @@ prebuilt_etc {
     name: "ueventd.mtk.rc",
     src: "ueventd.rc",
     filename: "ueventd.rc",
-    vendor: true,
-}
-
-prebuilt_etc {
-    name: "init.cgroup.rc",
-    src: "init.cgroup.rc",
-    relative_install_path: "init/hw",
     vendor: true,
 }
 
