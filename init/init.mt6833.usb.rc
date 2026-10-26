@@ -1,3 +1,14 @@
+# The USB gadget setup, used instead of hardware/mediatek's common init.mediatek.usb.rc
+# (use_custom_usb_gadget_rc in device.mk). This file came from elsewhere before that one
+# existed (2026-05, last 8f3502e77e); against it, this one:
+# - sets the musb-hdrc controller properties itself, at init, with MediaTek's vendor ID and
+#   bcdDevice 0x0404
+# - has no UVC webcam function, and fewer others (dropped in 2024 as unsupported)
+# - uses the plain rndis function rather than mtk_rndis
+# - names the NCM tethering interface ncm%d, which the tethering service needs (e7b596b)
+# - mounts adb's functionfs with no_disconnect=1, as MTP's and PTP's
+# Moving to the common file would need these upstream first.
+
 on early-init
 	write /sys/module/musb_hdrc/parameters/kernel_init_done 1
 	# write /sys/module/musb_hdrc/parameters/musb_force_on 1
