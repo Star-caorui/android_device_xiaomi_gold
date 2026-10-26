@@ -17,6 +17,7 @@ android_app {
     privileged: true,
 
     overrides: ["MusicFX"],
+    required: ["privapp-permissions-XiaomiDolby.xml"],
     static_libs: [
         "SettingsLib",
         "SpaLib",
@@ -27,4 +28,11 @@ android_app {
         "androidx.preference_preference",
         "org.lineageos.settings.resources",
     ],
+}
+
+prebuilt_etc {
+    name: "privapp-permissions-XiaomiDolby.xml",
+    src: "privapp-permissions-XiaomiDolby.xml",
+    relative_install_path: "permissions",
+    system_ext_specific: true,
 }

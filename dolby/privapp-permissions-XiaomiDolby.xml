@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+    <privapp-permissions package="co.aospa.dolby.xiaomi">
+        <permission name="android.permission.MODIFY_DEFAULT_AUDIO_EFFECTS" />
+    </privapp-permissions>
+</permissions>
