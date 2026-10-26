@@ -26,6 +26,9 @@ PRODUCT_MODEL := 2312DRAABG
 
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
+# Shown in the LineageOS version in Settings: 24.0-<date>-UNOFFICIAL-Betterr-gold
+TARGET_UNOFFICIAL_BUILD_ID := Betterr
+
 # LineageOS's own apps, which PixelOS does not have: Trebuchet and the
 # updater, with the list of published builds
 PRODUCT_PACKAGES += \
