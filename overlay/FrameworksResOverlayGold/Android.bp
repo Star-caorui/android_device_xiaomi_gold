@@ -5,7 +5,7 @@
 
 
 runtime_resource_overlay {
-    name: "FrameworkResOverlayGold",
+    name: "FrameworksResOverlayGold",
     resource_dirs: ["res"],
     vendor: true,
 }

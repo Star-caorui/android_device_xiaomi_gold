@@ -280,11 +280,11 @@ $(call inherit-product, hardware/mediatek/overlay/mssi.mk)
 
 PRODUCT_PACKAGES += \
     SystemUIOverlayGold \
-    FrameworkResOverlayGold \
-    TetheringConfigOverlay \
+    FrameworksResOverlayGold \
+    TetheringOverlayGold \
     NetworkStackOverlayGold \
     SettingsResOverlayGold \
-    WifiOverlay
+    WifiOverlayGold
 
 PRODUCT_PACKAGES += \
     NcmTetheringOverlay

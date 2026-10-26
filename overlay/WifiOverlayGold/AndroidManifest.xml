@@ -8,7 +8,7 @@
 -->
 <!-- Pixel specific wifi overlays -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.wifi.resources.gold"
+    package="com.android.wifi.resources.overlay.gold"
     android:versionCode="1"
     android:versionName="1.0">
     <application android:hasCode="false" />

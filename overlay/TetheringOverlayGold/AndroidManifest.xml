@@ -6,7 +6,7 @@
  */
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.networkstack.tethering.gold"
+    package="com.android.networkstack.tethering.overlay.gold"
     android:versionCode="1"
     android:versionName="1.0">
     <application android:hasCode="false" />
