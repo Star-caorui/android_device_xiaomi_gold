@@ -7,9 +7,6 @@ DEVICE_PATH := device/xiaomi/gold
 
 # Virtual A/B
 AB_OTA_UPDATER := true
-# The device the update package is for. The tools would otherwise take the first
-# ro.product.device they find in the partitions' properties, and product's is stock's
-# missi; recovery says gold on every unit.
 TARGET_OTA_ASSERT_DEVICE := gold
 AB_OTA_PARTITIONS := \
     dtbo \
@@ -43,8 +40,6 @@ BOARD_USES_GENERIC_KERNEL_IMAGE := true
 BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
 BOARD_INCLUDE_RECOVERY_RAMDISK_IN_VENDOR_BOOT := true
 
-# The bootloader loads the ramdisks of vendor_boot and never the one in boot.
-# bootimg.mk lays the two images out as stock does.
 BOARD_CUSTOM_BOOTIMG := true
 BOARD_CUSTOM_BOOTIMG_MK := $(DEVICE_PATH)/bootimg.mk
 
@@ -54,7 +49,6 @@ BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 67108864
 
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2
 
-# The addresses are stock's vendor_boot header's, as unpack_bootimg.py prints them.
 BOARD_BOOT_HEADER_VERSION := 4
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_BASE := 0x00000000
@@ -80,9 +74,7 @@ TARGET_NO_BOOTLOADER := true
 TARGET_SCREEN_DENSITY := 440
 TARGET_USES_VULKAN := true
 
-# Kernel: LineageOS's build_kernel builds it with android_kernel_xiaomi_gold_manifest, as lamu's,
-# into gold-kernels: the vendor modules, the device tree blob and its overlay from source, and
-# Google's GKI build, the kernel image and the GKI modules of system_dlkm.
+# Kernel
 TARGET_KERNEL_DEVICE := mgk_64_k66
 TARGET_KERNEL_DIR := $(DEVICE_PATH)-kernels
 TARGET_KERNEL_PLATFORM_SOURCE := xiaomi_gold
@@ -103,9 +95,6 @@ BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(GOLD_MODULES)/modules.
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(GOLD_MODULES)/modules.load.vendor_ramdisk))
 BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(GOLD_MODULES)/modules.load.recovery))
 
-# The touchscreen drivers are only in vendor_dlkm on stock, which recovery
-# does not mount. A copy goes into the vendor ramdisk, with the two modules
-# they need there, and init.recovery.mt6833.rc loads them.
 GOLD_RECOVERY_TOUCH_MODULES := \
     mt6359p-accdet.ko \
     hq_notifier.ko \
@@ -124,8 +113,6 @@ BOARD_SUPER_PARTITION_SIZE := 9126805504
 
 BOARD_USES_METADATA_PARTITION := true
 
-# The group is stock's one group in its update payload. mi_ext, stock's last dynamic partition,
-# holds only MIUI's additions and is not built.
 BOARD_SUPER_PARTITION_GROUPS := main
 BOARD_MAIN_SIZE := 9116319744
 BOARD_MAIN_PARTITION_LIST := \
@@ -208,21 +195,12 @@ AB_OTA_PARTITIONS += \
     vbmeta_system \
     vbmeta_vendor
 
-# Chained as stock's: vbmeta holds dtbo, vendor_boot and the dlkm partitions and chains boot,
-# vbmeta_system and vbmeta_vendor, at stock's rollback index locations and with its rollback
-# indexes, 0.
-# The key is AOSP's 4096-bit test key, which this device's builds have always been signed with:
-# KeyMint binds every key to the top vbmeta's public key, so another one would leave an updated
-# phone unable to read its data.
 BOARD_AVB_ENABLE := true
 BOARD_AVB_ALGORITHM := SHA256_RSA4096
 BOARD_AVB_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
 
-# Verity is off: with it on, an update would also compute the hash trees of the partitions it
-# writes on the phone, which makes incremental updates much slower.
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --set_hashtree_disabled_flag
 
-# Stock's hash trees are SHA-256; AOSP's default is SHA-1.
 $(foreach p,ODM_DLKM PRODUCT SYSTEM SYSTEM_DLKM SYSTEM_EXT VENDOR VENDOR_DLKM, \
     $(eval BOARD_AVB_$(p)_ADD_HASHTREE_FOOTER_ARGS += --hash_algorithm sha256))
 

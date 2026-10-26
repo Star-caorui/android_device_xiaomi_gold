@@ -11,8 +11,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/generic_ramdisk.mk)
 # Inherit launch_with_vendor_ramdisk product
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_vendor_ramdisk.mk)
 
-# Virtual A/B with compressed snapshots, as stock: its ro.virtual_ab.* properties are the
-# Android 13 baseline's and threads=true, and its payload is compressed with gzip.
+# Virtual A/B compression
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/android_t_baseline.mk)
 PRODUCT_VIRTUAL_AB_COMPRESSION_METHOD := gz
 PRODUCT_VENDOR_PROPERTIES += ro.virtual_ab.compression.threads=true
@@ -33,7 +32,7 @@ PRODUCT_COPY_FILES += \
 
 $(call inherit-product, $(DEVICE_PATH)/prop/vendor_logtag.mk)
 
-# Vendor Binder service manager (required by MediaTek PQ)
+# Vendor Binder service manager
 PRODUCT_PACKAGES += \
     vndservicemanager
 
@@ -41,7 +40,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
-# Boot animation: LineageOS and PixelOS size it to the screen width
+# Boot animation
 TARGET_SCREEN_WIDTH := 1080
 
 # Dynamic Partitions
@@ -80,18 +79,14 @@ AB_OTA_POSTINSTALL_CONFIG += \
 # Shipping API level
 PRODUCT_SHIPPING_API_LEVEL := 33
 
-# Audio: the service, its effects factory and the sound trigger HAL are stock's AIDL ones.
-# The effect libraries the factory loads are built from source.
+# Audio
 PRODUCT_PACKAGES += \
     audio.bluetooth.default \
     audio_policy.stub
 
-# Hands the call volume step to MediaTek's audio HAL, which does not follow the stream volume.
 PRODUCT_PACKAGES += \
     MtkInCallService
 
-# Translates the framework's key-value audio parameters, that one included, for the audio HAL.
-# Stock's own translator cannot read what Android 17 sends it.
 PRODUCT_PACKAGES += \
     android.hardware.audio.parameter_parser.service
 
@@ -202,7 +197,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.opengles.deqp.level-2024-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.opengles.deqp.level-2024-03-01.xml \
     frameworks/native/data/etc/android.software.vulkan.deqp.level-2024-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.vulkan.deqp.level-2024-03-01.xml
 
-# Vendor libraries that apps may load: OpenCL
+# Public libraries
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
 
@@ -210,7 +205,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     XiaomiDolby
 
-# Hotword enrollment: the apps that hand a trained "Hey Google" model to the sound trigger HAL
+# Hotword enrollment
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/permissions/privapp-permissions-hotword.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-hotword.xml
 
@@ -220,7 +215,7 @@ PRODUCT_PACKAGES += \
     android.hardware.health-service.mediatek-recovery \
     vendor.lineage.health-service.default
 
-# Charging control: writing 1 to input_suspend stops charging, 0 resumes it
+# Charging control
 $(call soong_config_set,lineage_health,charging_control_charging_path,/sys/class/power_supply/battery/input_suspend)
 $(call soong_config_set,lineage_health,charging_control_charging_enabled,0)
 $(call soong_config_set,lineage_health,charging_control_charging_disabled,1)
@@ -269,8 +264,6 @@ PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(DEVICE_PATH)/configs/media,$(TARGET_COPY_OUT_VENDOR)/etc)
 
 # Overlays
-# MediaTek's defaults first: hardware/mediatek picks the ones MT6833 takes, the telephony ones
-# with the vendor RIL. Ours below carry only what gold does differently.
 ENABLE_VENDOR_RIL_SERVICE := true
 $(call inherit-product, hardware/mediatek/overlay/mssi.mk)
 
@@ -307,8 +300,6 @@ PRODUCT_PACKAGES += \
 
 $(call soong_config_set_bool,libmtkperf_client,powerhalwrap_aidl,true)
 
-# libperfmgr requires these profile names, but MT6833 has no Pixel
-# /proc/vendor_sched/sched_qos interface; keep the vendor definitions no-op.
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json \
     $(DEVICE_PATH)/configs/task_profiles.json:$(TARGET_COPY_OUT_VENDOR)/etc/task_profiles.json
@@ -318,15 +309,12 @@ PRODUCT_PACKAGES += \
     init.modem.rc \
     android.hardware.telephony.ims.prebuilt.xml
 
-# Turns on 5G NSA (EN-DC) where the modem keeps it off for a SIM.
 PRODUCT_PACKAGES += \
     GoldNrDc
 
-# MediaTek framework classes used by the proprietary radio stack.
 $(call inherit-product, hardware/mediatek/frameworks/mediatek-frameworks.mk)
 
-# IMS: the service, its helpers and the video call stack are taken from stock. The compatibility
-# jar supplies a telephony class they still use.
+# IMS
 $(call inherit-product, hardware/lineage/compat/frameworks/compat.mk)
 
 PRODUCT_COPY_FILES += \
@@ -393,7 +381,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.host.xml
 
-# The touchscreen drivers ask for these when they start, also in recovery
+# Touchscreen firmware
 PRODUCT_COPY_FILES += \
     $(foreach f,focaltech_ts_fw_CSOT.bin focaltech_ts_fw_CSOT_mask0x01.bin focaltech_ts_fw_TianMa.bin goodix_cfg_group.bin gt9916r_ts_fw_tm.bin, \
         vendor/xiaomi/gold/proprietary/vendor/firmware/$(f):$(TARGET_COPY_OUT_RECOVERY)/root/vendor/firmware/$(f))
