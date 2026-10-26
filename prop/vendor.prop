@@ -337,6 +337,7 @@ ro.vendor.nfc.debounce_field_on=1
 
 # WiFi
 wifi.interface=wlan0
+ro.vendor.wifi.sap.interface=ap0
 
 # Zygote
 zygote.critical_window.minute=10
