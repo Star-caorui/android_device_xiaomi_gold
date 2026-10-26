@@ -50,8 +50,8 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
 # Virtual A/B
 PRODUCT_PACKAGES += \
-    com.android.hardware.boot \
-    android.hardware.boot-service.default_recovery
+    android.hardware.boot-service.mediatek \
+    android.hardware.boot-service.mediatek_recovery
 
 PRODUCT_PACKAGES += \
     checkpoint_gc \
