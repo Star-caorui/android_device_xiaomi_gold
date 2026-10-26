@@ -64,6 +64,11 @@ on late-fs
     mount_all --late
 
 on post-fs
+    # Stock's tee-supplicant.rc hands the UFS BSG node to system:system for the TEE's RPMB
+    # access; hardware/mediatek's boot control HAL, which switches the boot LU through it,
+    # runs as root without the system group. Root owns it, system keeps it through the group.
+    chown root system /dev/ufs-bsg0
+
     #change permissions for mediaserver
     chown root media /proc/clkmgr/mipi_test
 
