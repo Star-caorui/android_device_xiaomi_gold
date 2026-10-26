@@ -425,7 +425,8 @@ PRODUCT_PACKAGES += \
     hostapd \
     wlan_assistant \
     wpa_supplicant \
-    libwifi-hal-wrapper
+    libwifi-hal-wrapper \
+    MssiWifiOverlay
 
 PRODUCT_PACKAGES += \
     init.connectivity.rc \
