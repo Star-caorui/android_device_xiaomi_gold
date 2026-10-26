@@ -2,7 +2,3 @@
 # file_contexts. The common AOSP HAL policy supplies its Binder and service
 # manager permissions.
 r_dir_file(hal_sensors_default, gold_sysfs_display)
-
-# The dynamic sensor sub-HAL watches /dev for the raw HID nodes of Bluetooth head trackers.
-allow hal_sensors_default device:dir r_dir_perms;
-allow hal_sensors_default hidraw_device:chr_file rw_file_perms;
