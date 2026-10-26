@@ -16,17 +16,4 @@
         <item>ap\\d</item>
         <item>ap_br_ap\\d</item>
     </string-array>
-
-    <!-- This setting is deprecated, please use
-         com.android.networkstack.tethering.R.array.config_tether_usb_regexs instead. -->
-    <string-array translatable="false" name="config_tether_usb_regexs">
-        <item>rndis\\d</item>
-    </string-array>
-
-    <!-- List of regexpressions describing the interface (if any) that represent tetherable
-         NCM interfaces.  If the device doesn't want to support tethering over NCM this should
-         be empty. -->
-    <string-array translatable="false" name="config_tether_ncm_regexs">
-        <item>ncm\\d</item>
-    </string-array>
 </resources>
