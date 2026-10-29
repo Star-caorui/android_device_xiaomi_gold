@@ -1,0 +1,404 @@
+From 1603079ae85202d8a8c2a20e2154ae33e1c72058 Mon Sep 17 00:00:00 2001
+From: Betterr <51264180+Star-caorui@users.noreply.github.com>
+Date: Fri, 23 Oct 2026 14:09:01 +0800
+Subject: [PATCH] partnerconfig: Stop looking up a missing partner provider on
+ every call
+
+Without com.google.android.setupwizard.partner, each PartnerConfigHelper
+check leaves its cached bundle null and asks the activity manager again
+on the next call. Setupdesign makes these checks while binding list
+items, so scrolling the setup wizard's language list made hundreds of
+failed getContentProvider calls per frame.
+
+Remember that the provider is missing once a call finds no provider for
+the authority, and throw the same exception from then on without a
+binder call. resetInstance() clears it.
+
+Change-Id: Ibd778ab9de4341be89c5e88b4464535af10e8069
+---
+ .../partnerconfig/PartnerConfigHelper.java    | 211 +++++++-----------
+ 1 file changed, 84 insertions(+), 127 deletions(-)
+
+diff --git a/partnerconfig/java/com/google/android/setupcompat/partnerconfig/PartnerConfigHelper.java b/partnerconfig/java/com/google/android/setupcompat/partnerconfig/PartnerConfigHelper.java
+index 1e229f6..70bb4ee 100644
+--- a/partnerconfig/java/com/google/android/setupcompat/partnerconfig/PartnerConfigHelper.java
++++ b/partnerconfig/java/com/google/android/setupcompat/partnerconfig/PartnerConfigHelper.java
+@@ -17,6 +17,7 @@
+ package com.google.android.setupcompat.partnerconfig;
+ 
+ import android.app.Activity;
++import android.content.ContentProviderClient;
+ import android.content.ContentResolver;
+ import android.content.Context;
+ import android.content.ContextWrapper;
+@@ -149,6 +150,8 @@ public class PartnerConfigHelper {
+ 
+   @VisibleForTesting public static Bundle suwDayNightEnabledBundle = null;
+ 
++  private static volatile boolean suwProviderMissing = false;
++
+   @VisibleForTesting public static Bundle applyExtendedPartnerConfigBundle = null;
+ 
+   @VisibleForTesting public static Bundle applyMaterialYouConfigBundle = null;
+@@ -760,13 +763,8 @@ private void getPartnerConfigBundle(Context context) {
+     if (resultBundle == null || resultBundle.isEmpty()) {
+       try {
+         resultBundle =
+-            context
+-                .getContentResolver()
+-                .call(
+-                    getContentUri(),
+-                    SUW_GET_PARTNER_CONFIG_METHOD,
+-                    /* arg= */ null,
+-                    /* extras= */ null);
++            callSuwProvider(
++                context, SUW_GET_PARTNER_CONFIG_METHOD, /* arg= */ null, /* extras= */ null);
+         partnerResourceCache.clear();
+         Log.i(
+             TAG, "PartnerConfigsBundle=" + (resultBundle != null ? resultBundle.size() : "(null)"));
+@@ -1013,6 +1011,7 @@ ResourceEntry adjustGlifExpressiveResourceEntryDefaultValue(
+   @VisibleForTesting
+   public static synchronized void resetInstance() {
+     instance = null;
++    suwProviderMissing = false;
+     suwDayNightEnabledBundle = null;
+     applyExtendedPartnerConfigBundle = null;
+     applyMaterialYouConfigBundle = null;
+@@ -1046,13 +1045,8 @@ public static boolean isSetupWizardDayNightEnabled(@NonNull Context context) {
+     if (suwDayNightEnabledBundle == null) {
+       try {
+         suwDayNightEnabledBundle =
+-            context
+-                .getContentResolver()
+-                .call(
+-                    getContentUri(),
+-                    IS_SUW_DAY_NIGHT_ENABLED_METHOD,
+-                    /* arg= */ null,
+-                    /* extras= */ null);
++            callSuwProvider(
++                context, IS_SUW_DAY_NIGHT_ENABLED_METHOD, /* arg= */ null, /* extras= */ null);
+       } catch (IllegalArgumentException | SecurityException exception) {
+         logv("SetupWizard DayNight supporting status unknown; return as true.");
+         suwDayNightEnabledBundle = null;
+@@ -1069,13 +1063,11 @@ public static boolean shouldApplyExtendedPartnerConfig(@NonNull Context context)
+     if (applyExtendedPartnerConfigBundle == null) {
+       try {
+         applyExtendedPartnerConfigBundle =
+-            context
+-                .getContentResolver()
+-                .call(
+-                    getContentUri(),
+-                    IS_EXTENDED_PARTNER_CONFIG_ENABLED_METHOD,
+-                    /* arg= */ null,
+-                    /* extras= */ null);
++            callSuwProvider(
++                context,
++                IS_EXTENDED_PARTNER_CONFIG_ENABLED_METHOD,
++                /* arg= */ null,
++                /* extras= */ null);
+       } catch (IllegalArgumentException | SecurityException exception) {
+         logv("SetupWizard extended partner configs supporting status unknown; return as true.");
+         applyExtendedPartnerConfigBundle = null;
+@@ -1096,13 +1088,8 @@ public static boolean shouldApplyMaterialYouStyle(@NonNull Context context) {
+     if (applyMaterialYouConfigBundle == null || applyMaterialYouConfigBundle.isEmpty()) {
+       try {
+         applyMaterialYouConfigBundle =
+-            context
+-                .getContentResolver()
+-                .call(
+-                    getContentUri(),
+-                    IS_MATERIAL_YOU_STYLE_ENABLED_METHOD,
+-                    /* arg= */ null,
+-                    /* extras= */ null);
++            callSuwProvider(
++                context, IS_MATERIAL_YOU_STYLE_ENABLED_METHOD, /* arg= */ null, /* extras= */ null);
+         // The suw version did not support the flag yet, fallback to
+         // shouldApplyExtendedPartnerConfig() for SDK S.
+         if (applyMaterialYouConfigBundle != null
+@@ -1131,13 +1118,8 @@ public static String getSuwDefaultThemeString(@NonNull Context context) {
+     if (suwDefaultThemeBundle == null || suwDefaultThemeBundle.isEmpty()) {
+       try {
+         suwDefaultThemeBundle =
+-            context
+-                .getContentResolver()
+-                .call(
+-                    getContentUri(),
+-                    GET_SUW_DEFAULT_THEME_STRING_METHOD,
+-                    /* arg= */ null,
+-                    /* extras= */ null);
++            callSuwProvider(
++                context, GET_SUW_DEFAULT_THEME_STRING_METHOD, /* arg= */ null, /* extras= */ null);
+       } catch (IllegalArgumentException | SecurityException exception) {
+         logv("SetupWizard default theme status unknown; return as glif_v4.");
+         suwDefaultThemeBundle = null;
+@@ -1155,13 +1137,8 @@ public static boolean isSetupWizardDynamicColorEnabled(@NonNull Context context)
+     if (applyDynamicColorBundle == null) {
+       try {
+         applyDynamicColorBundle =
+-            context
+-                .getContentResolver()
+-                .call(
+-                    getContentUri(),
+-                    IS_DYNAMIC_COLOR_ENABLED_METHOD,
+-                    /* arg= */ null,
+-                    /* extras= */ null);
++            callSuwProvider(
++                context, IS_DYNAMIC_COLOR_ENABLED_METHOD, /* arg= */ null, /* extras= */ null);
+       } catch (IllegalArgumentException | SecurityException exception) {
+         logv("SetupWizard dynamic color supporting status unknown; return as true.");
+         applyDynamicColorBundle = null;
+@@ -1178,13 +1155,8 @@ public static boolean isSetupWizardFullDynamicColorEnabled(@NonNull Context cont
+     if (applyFullDynamicColorBundle == null) {
+       try {
+         applyFullDynamicColorBundle =
+-            context
+-                .getContentResolver()
+-                .call(
+-                    getContentUri(),
+-                    IS_FULL_DYNAMIC_COLOR_ENABLED_METHOD,
+-                    /* arg= */ null,
+-                    /* extras= */ null);
++            callSuwProvider(
++                context, IS_FULL_DYNAMIC_COLOR_ENABLED_METHOD, /* arg= */ null, /* extras= */ null);
+       } catch (IllegalArgumentException | SecurityException exception) {
+         logv("SetupWizard full dynamic color supporting status unknown; return as true.");
+         applyFullDynamicColorBundle = null;
+@@ -1201,13 +1173,11 @@ public static boolean isEmbeddedActivityOnePaneEnabled(@NonNull Context context)
+     if (applyEmbeddedActivityOnePaneBundle == null) {
+       try {
+         applyEmbeddedActivityOnePaneBundle =
+-            context
+-                .getContentResolver()
+-                .call(
+-                    getContentUri(),
+-                    IS_EMBEDDED_ACTIVITY_ONE_PANE_ENABLED_METHOD,
+-                    /* arg= */ null,
+-                    /* extras= */ null);
++            callSuwProvider(
++                context,
++                IS_EMBEDDED_ACTIVITY_ONE_PANE_ENABLED_METHOD,
++                /* arg= */ null,
++                /* extras= */ null);
+       } catch (IllegalArgumentException | SecurityException exception) {
+         logv("SetupWizard one-pane support in embedded activity status unknown; return as true.");
+         applyEmbeddedActivityOnePaneBundle = null;
+@@ -1225,13 +1195,11 @@ public static boolean isNeutralButtonStyleEnabled(@NonNull Context context) {
+     if (applyNeutralButtonStyleBundle == null) {
+       try {
+         applyNeutralButtonStyleBundle =
+-            context
+-                .getContentResolver()
+-                .call(
+-                    getContentUri(),
+-                    IS_NEUTRAL_BUTTON_STYLE_ENABLED_METHOD,
+-                    /* arg= */ null,
+-                    /* extras= */ null);
++            callSuwProvider(
++                context,
++                IS_NEUTRAL_BUTTON_STYLE_ENABLED_METHOD,
++                /* arg= */ null,
++                /* extras= */ null);
+       } catch (IllegalArgumentException | SecurityException exception) {
+         logv("Neutral button style supporting status unknown; return as true.");
+         applyNeutralButtonStyleBundle = null;
+@@ -1248,13 +1216,8 @@ public static boolean isFontWeightEnabled(@NonNull Context context) {
+     if (applyFontWeightBundle == null) {
+       try {
+         applyFontWeightBundle =
+-            context
+-                .getContentResolver()
+-                .call(
+-                    getContentUri(),
+-                    IS_FONT_WEIGHT_ENABLED_METHOD,
+-                    /* arg= */ null,
+-                    /* extras= */ null);
++            callSuwProvider(
++                context, IS_FONT_WEIGHT_ENABLED_METHOD, /* arg= */ null, /* extras= */ null);
+       } catch (IllegalArgumentException | SecurityException exception) {
+         Log.w(TAG, "Font weight supporting status unknown; return as true.");
+         applyFontWeightBundle = null;
+@@ -1274,13 +1237,11 @@ public static boolean isGlifThemeControlledTransitionApplied(@NonNull Context co
+     if (applyTransitionBundle == null || applyTransitionBundle.isEmpty()) {
+       try {
+         applyTransitionBundle =
+-            context
+-                .getContentResolver()
+-                .call(
+-                    getContentUri(),
+-                    APPLY_GLIF_THEME_CONTROLLED_TRANSITION_METHOD,
+-                    /* arg= */ null,
+-                    /* extras= */ null);
++            callSuwProvider(
++                context,
++                APPLY_GLIF_THEME_CONTROLLED_TRANSITION_METHOD,
++                /* arg= */ null,
++                /* extras= */ null);
+       } catch (IllegalArgumentException | SecurityException exception) {
+         logv("applyGlifThemeControlledTransition unknown; return applyGlifThemeControlledTransition"
+                 + " as default value");
+@@ -1297,13 +1258,8 @@ public static synchronized boolean isForceTwoPaneEnabled(@NonNull Context contex
+     if (applyForceTwoPaneBundle == null || applyForceTwoPaneBundle.isEmpty()) {
+       try {
+         applyForceTwoPaneBundle =
+-            context
+-                .getContentResolver()
+-                .call(
+-                    getContentUri(),
+-                    IS_FORCE_TWO_PANE_ENABLED_METHOD,
+-                    /* arg= */ null,
+-                    /* extras= */ null);
++            callSuwProvider(
++                context, IS_FORCE_TWO_PANE_ENABLED_METHOD, /* arg= */ null, /* extras= */ null);
+       } catch (IllegalArgumentException | SecurityException exception) {
+         Log.w(TAG, "isForceTwoPaneEnabled status is unknown; return as false.");
+       }
+@@ -1319,13 +1275,11 @@ public static synchronized boolean isKeyboardFocusEnhancementEnabled(@NonNull Co
+     if (keyboardFocusEnhancementBundle == null || keyboardFocusEnhancementBundle.isEmpty()) {
+       try {
+         keyboardFocusEnhancementBundle =
+-            context
+-                .getContentResolver()
+-                .call(
+-                    getContentUri(),
+-                    IS_KEYBOARD_FOCUS_ENHANCEMENT_ENABLED_METHOD,
+-                    /* arg= */ null,
+-                    /* extras= */ null);
++            callSuwProvider(
++                context,
++                IS_KEYBOARD_FOCUS_ENHANCEMENT_ENABLED_METHOD,
++                /* arg= */ null,
++                /* extras= */ null);
+       } catch (IllegalArgumentException | SecurityException exception) {
+         Log.w(TAG, "SetupWizard keyboard focus enhancement status unknown; return as false.");
+         keyboardFocusEnhancementBundle = null;
+@@ -1342,13 +1296,8 @@ public static boolean isSuwJoinedUpLoadingEnabled(@NonNull Context context) {
+     if (suwJoinedUpLoadingBundle == null || suwJoinedUpLoadingBundle.isEmpty()) {
+       try {
+         suwJoinedUpLoadingBundle =
+-            context
+-                .getContentResolver()
+-                .call(
+-                    getContentUri(),
+-                    IS_SUW_JOINED_UP_LOADING_ENABLED,
+-                    /* arg= */ null,
+-                    /* extras= */ null);
++            callSuwProvider(
++                context, IS_SUW_JOINED_UP_LOADING_ENABLED, /* arg= */ null, /* extras= */ null);
+       } catch (IllegalArgumentException | SecurityException exception) {
+         Log.w(TAG, "SetupWizard joined up loading status unknown; return as false.");
+         suwJoinedUpLoadingBundle = null;
+@@ -1368,9 +1317,7 @@ public static boolean isOneTapEnabled(@NonNull Context context) {
+     // may be acceptable.
+     try {
+       oneTapBundle =
+-          context
+-              .getContentResolver()
+-              .call(getContentUri(), IS_ONE_TAP_ENABLED, /* arg= */ null, /* extras= */ null);
++          callSuwProvider(context, IS_ONE_TAP_ENABLED, /* arg= */ null, /* extras= */ null);
+     } catch (IllegalArgumentException | SecurityException exception) {
+       Log.w(TAG, "SetupWizard One Tap status unknown; return as false.");
+       oneTapBundle = null;
+@@ -1392,13 +1339,8 @@ public static boolean isGlifExpressiveEnabled(@NonNull Context context) {
+       if (applyGlifExpressiveBundle == null || applyGlifExpressiveBundle.isEmpty()) {
+         try {
+           applyGlifExpressiveBundle =
+-              context
+-                  .getContentResolver()
+-                  .call(
+-                      getContentUri(),
+-                      IS_GLIF_EXPRESSIVE_ENABLED,
+-                      /* arg= */ null,
+-                      /* extras= */ null);
++              callSuwProvider(
++                  context, IS_GLIF_EXPRESSIVE_ENABLED, /* arg= */ null, /* extras= */ null);
+         } catch (IllegalArgumentException | SecurityException exception) {
+           Log.w(TAG, "isGlifExpressiveEnabled status is unknown; return as true.");
+         }
+@@ -1459,7 +1401,7 @@ private static Bundle getPartnerBundle(
+       @NonNull Context context, @NonNull String flagName, @Nullable Bundle bundle) {
+     if (bundle == null || bundle.isEmpty()) {
+       try {
+-        return context.getContentResolver().call(getContentUri(), flagName, null, null);
++        return callSuwProvider(context, flagName, null, null);
+       } catch (IllegalArgumentException | SecurityException exception) {
+         Log.w(TAG, flagName + " status is unknown; return as false.");
+         return null;
+@@ -1473,13 +1415,11 @@ public static boolean isEnhancedSetupDesignMetricsEnabled(@NonNull Context conte
+     if (enableMetricsLoggingBundle == null || enableMetricsLoggingBundle.isEmpty()) {
+       try {
+         enableMetricsLoggingBundle =
+-            context
+-                .getContentResolver()
+-                .call(
+-                    getContentUri(),
+-                    IS_ENHANCED_SETUP_DESIGN_METRICS_ENABLED,
+-                    /* arg= */ null,
+-                    /* extras= */ null);
++            callSuwProvider(
++                context,
++                IS_ENHANCED_SETUP_DESIGN_METRICS_ENABLED,
++                /* arg= */ null,
++                /* extras= */ null);
+       } catch (IllegalArgumentException | SecurityException exception) {
+         Log.w(TAG, "Method " + IS_ENHANCED_SETUP_DESIGN_METRICS_ENABLED + " is unknown");
+         enableMetricsLoggingBundle = null;
+@@ -1507,10 +1447,7 @@ public static boolean isSuwDisableTransitionsInModalViewActive(@NonNull Context
+   private static boolean getBooleanFromPartnerBundle(@NonNull Context context, String method) {
+     Bundle bundle = null;
+     try {
+-      bundle =
+-          context
+-              .getContentResolver()
+-              .call(getContentUri(), method, /* arg= */ null, /* extras= */ null);
++      bundle = callSuwProvider(context, method, /* arg= */ null, /* extras= */ null);
+     } catch (IllegalArgumentException | SecurityException exception) {
+       Log.w(TAG, "Method " + method + " is unknown");
+       return false;
+@@ -1578,13 +1515,8 @@ public static long getSuwSessionId(@NonNull Context context) {
+     Bundle sessionIdBundle = null;
+     try {
+       sessionIdBundle =
+-          context
+-              .getContentResolver()
+-              .call(
+-                  getContentUri(),
+-                  CALL_METHOD_GET_SUW_SESSION_ID,
+-                  /* arg= */ null,
+-                  /* extras= */ null);
++          callSuwProvider(
++              context, CALL_METHOD_GET_SUW_SESSION_ID, /* arg= */ null, /* extras= */ null);
+     } catch (IllegalArgumentException | SecurityException exception) {
+       Log.w(TAG, "Failed to get SUW session ID; return 0.");
+       return 0L;
+@@ -1595,6 +1527,31 @@ public static long getSuwSessionId(@NonNull Context context) {
+     return 0L;
+   }
+ 
++  /**
++   * Calls {@link #SUW_AUTHORITY}. Once a call has found no such provider, later calls throw the
++   * same {@link IllegalArgumentException} without asking the activity manager again: callers retry
++   * when their cached result is missing, and without the provider every lookup is a failed binder
++   * call.
++   */
++  private static Bundle callSuwProvider(
++      Context context, String method, @Nullable String arg, @Nullable Bundle extras) {
++    if (suwProviderMissing) {
++      throw new IllegalArgumentException("Unknown authority " + SUW_AUTHORITY);
++    }
++    try {
++      return context.getContentResolver().call(getContentUri(), method, arg, extras);
++    } catch (IllegalArgumentException exception) {
++      ContentProviderClient client =
++          context.getContentResolver().acquireUnstableContentProviderClient(SUW_AUTHORITY);
++      if (client == null) {
++        suwProviderMissing = true;
++      } else {
++        client.close();
++      }
++      throw exception;
++    }
++  }
++
+   @VisibleForTesting
+   static Uri getContentUri() {
+     return new Uri.Builder()

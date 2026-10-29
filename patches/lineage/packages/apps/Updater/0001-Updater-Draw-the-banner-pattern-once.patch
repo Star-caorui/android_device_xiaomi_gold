@@ -1,0 +1,60 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Betterr <51264180+Star-caorui@users.noreply.github.com>
+Date: Sat, 17 Oct 2026 17:53:20 +0800
+Subject: [PATCH] Updater: Draw the banner pattern once
+
+The pattern behind the device info card is an AGSL shader that, for
+every pixel, tests 135 circles across 9 tiles. drawWithCache keeps the
+shader object, but onDrawBehind still runs it over the whole card each
+time the card is drawn, and scrolling draws it on every frame.
+
+The pattern only depends on the card size and two colours, so record
+it into an offscreen graphics layer when the cache is built and draw
+that layer instead. drawWithCache rebuilds it when any of them change.
+
+Scrolling the main screen up and down eight times on a Redmi Note 13 5G
+(Dimensity 6080, Mali-G57 MC2, 1080x2400 at 120 Hz):
+
+                 frames  janky   50th / 90th percentile
+  before            182  92.3%   81 / 200 ms
+  after            1538   0.7%   12 / 13 ms
+  before, again     168  97.6%   81 / 200 ms
+
+The preferences screen of the same app takes 5 ms per frame.
+
+Change-Id: I25c3a80584286bf55976e70256992a8db71babb1
+---
+ .../java/org/lineageos/updater/deviceinfo/UpdaterCard.kt | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/app/src/main/java/org/lineageos/updater/deviceinfo/UpdaterCard.kt b/app/src/main/java/org/lineageos/updater/deviceinfo/UpdaterCard.kt
+index 2d7795f..7254303 100644
+--- a/app/src/main/java/org/lineageos/updater/deviceinfo/UpdaterCard.kt
++++ b/app/src/main/java/org/lineageos/updater/deviceinfo/UpdaterCard.kt
+@@ -29,6 +29,8 @@ import androidx.compose.ui.graphics.Color
+ import androidx.compose.ui.graphics.ColorFilter
+ import androidx.compose.ui.graphics.ShaderBrush
+ import androidx.compose.ui.graphics.Shape
++import androidx.compose.ui.graphics.layer.CompositingStrategy
++import androidx.compose.ui.graphics.layer.drawLayer
+ import androidx.compose.ui.graphics.toArgb
+ import androidx.compose.ui.layout.ContentScale
+ import androidx.compose.ui.platform.LocalDensity
+@@ -318,8 +320,13 @@ private fun Modifier.updaterHeaderPattern(
+     }
+     val brush = ShaderBrush(shader)
+ 
++    val patternLayer = obtainGraphicsLayer().apply {
++        compositingStrategy = CompositingStrategy.Offscreen
++        record { drawRect(brush) }
++    }
++
+     onDrawBehind {
+-        drawRect(brush)
++        drawLayer(patternLayer)
+     }
+ }
+ 
+-- 
+2.54.0 (Apple Git-157)
+

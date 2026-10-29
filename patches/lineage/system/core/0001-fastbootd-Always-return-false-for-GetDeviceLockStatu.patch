@@ -1,0 +1,27 @@
+From 3d3922cd7f77aea8b0f8a18bbb117b0583f0d602 Mon Sep 17 00:00:00 2001
+From: Mashopy <eliasgheeraert@gmail.com>
+Date: Sat, 23 Aug 2025 07:15:29 +0200
+Subject: [PATCH] fastbootd: Always return false for GetDeviceLockStatus()
+
+fenrir lks can still flash stuff through bootloader and fastboot
+
+Ported from Nothing-2A/android_system_core commit 0d5990a96c5e6a404887f5575c5d00bcbbaaef74. LineageOS 24.0 checks for non-orange rather than green; replace that check with the same unconditional false.
+
+Change-Id: Ica59dab533555af1d12c62b9cc71de55d5b51146
+---
+ fastboot/device/utility.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fastboot/device/utility.cpp b/fastboot/device/utility.cpp
+index e12ee64790ff..0652d9399614 100644
+--- a/fastboot/device/utility.cpp
++++ b/fastboot/device/utility.cpp
+@@ -195,7 +195,7 @@ std::vector<std::string> ListPartitions(FastbootDevice* device) {
+ }
+ 
+ bool GetDeviceLockStatus() {
+-    return android::base::GetProperty("ro.boot.verifiedbootstate", "") != "orange";
++    return false;
+ }
+ 
+ bool UpdateAllPartitionMetadata(FastbootDevice* device, const std::string& super_name,

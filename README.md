@@ -19,6 +19,30 @@ Forked from [Dhterech's tree](https://github.com/Dhterech/android_device_xiaomi_
 | Script | What it fills |
 | --- | --- |
 | `extract-files.py` | `vendor/xiaomi/gold`, kept as [android_vendor_xiaomi_gold](https://github.com/Star-caorui/android_vendor_xiaomi_gold/tree/lineage-24.0#regenerating), from the stock package |
+| `patches/apply.sh lineage` (or `pixelos`) | Commits that ROM's platform patches below onto the synced projects; run it after every `repo sync`. A patch that is already in the sources is skipped and named, and one that does not apply stops it |
+
+## Platform patches
+
+`patches/<rom>/<project path>/` holds what the build changes outside this tree, applied on top of that ROM's projects as they are synced.
+
+LineageOS (`patches/lineage/`):
+
+| Project | Patch | From |
+| --- | --- | --- |
+| `lineage-sdk` | LineageSettingsProvider: Notify key URI on delete | Ours, under review: [508379](https://review.lineageos.org/c/LineageOS/android_lineage-sdk/+/508379) |
+| `packages/apps/Updater` | Updater: Draw the banner pattern once | Ours, under review: [508380](https://review.lineageos.org/c/LineageOS/android_packages_apps_Updater/+/508380) |
+| `packages/modules/Bluetooth` | a2dp: Skip audio context reconfig for SW codecs | Ours, under review: [508408](https://review.lineageos.org/c/LineageOS/android_packages_modules_Bluetooth/+/508408) |
+| `external/setupcompat` | partnerconfig: Stop looking up a missing partner provider on every call (the setup wizard's language list stuttered without Google's setup wizard) | Ours, not sent upstream |
+| `system/core` | fastbootd: Always return false for GetDeviceLockStatus() | Mashopy's, from [Nothing-2A](https://github.com/Nothing-2A/android_system_core/commit/0d5990a96c5e6a404887f5575c5d00bcbbaaef74), for LKs patched with fenrir |
+| `system/fs/fs_mgr` | libfs_avb: Allow LKs patched with fenrir to boot on AOSP | Mashopy's, from [Nothing-2A](https://github.com/Nothing-2A/android_system_core/commit/8ff6e7a68523c3b870d8dcd5713c71ea15b43dd2) |
+
+PixelOS (`patches/pixelos/`):
+
+| Project | Patch | From |
+| --- | --- | --- |
+| `packages/modules/Bluetooth` | a2dp: Skip audio context reconfig for SW codecs | Ours, under review on LineageOS: [508408](https://review.lineageos.org/c/LineageOS/android_packages_modules_Bluetooth/+/508408) |
+| `system/fs/fs_mgr` | libfs_avb: Allow LKs patched with fenrir to boot on AOSP | Mashopy's, as for LineageOS; PixelOS's fastbootd already allows fenrir |
+| `vendor/custom` | envsetup: Add build_kernel function for Pixel OOT kernel build; Allow skipping OOT kernel build; Don't wipe module lists that aren't generated | Michael Bestas's and R0rt1z2's, cherry-picked from LineageOS's android_vendor_lineage: PixelOS's build/envsetup.sh calls `build_kernel`, which its copy of LineageOS's envsetup.sh predates |
 
 ## Kernel modules
 

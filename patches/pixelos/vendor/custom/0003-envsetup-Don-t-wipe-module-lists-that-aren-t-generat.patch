@@ -1,0 +1,39 @@
+From 15219adbbd3dc4c692e0da7e56fa8b8b20c39e14 Mon Sep 17 00:00:00 2001
+From: R0rt1z2 <roger@r0rt1z2.com>
+Date: Sun, 12 Jul 2026 01:03:04 +0200
+Subject: [PATCH] envsetup: Don't wipe module lists that aren't generated
+
+Wiping TARGET_KERNEL_DIR assumes everything in there came from the
+dist, which only holds if the kernel generates the module lists.
+
+If it doesn't, they're committed in the prebuilts repo and nothing puts
+them back, so they're gone after the first build.
+
+Devices in that case can set TARGET_PROVIDES_STATIC_MODULE_LISTS.
+
+Change-Id: I3fea00bc3754d950836bff3ebbc686dd2c0202b5
+
+(cherry picked from LineageOS/android_vendor_lineage commit 734f70b5b96e16584a8bdf8baaccd637bbd68f95)
+---
+ build/envsetup.sh | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/build/envsetup.sh b/build/envsetup.sh
+index 7712155..206f302 100644
+--- a/build/envsetup.sh
++++ b/build/envsetup.sh
+@@ -1004,7 +1004,13 @@ function build_kernel() {
+ 
+     # Remove previous kernel prebuilts
+     if [ -d "${target_kernel_dir}" ]; then
+-        find "${target_kernel_dir}" -maxdepth 1 ! \( -name .gitignore \) -type f -delete
++        local find_args=("-maxdepth" "1" "-type" "f" "!" "-name" ".gitignore")
++        # Some kernels don't generate the module lists, in which case they're
++        # checked in next to the prebuilts. Don't delete what won't come back.
++        if [[ "$(_get_build_var_cached TARGET_PROVIDES_STATIC_MODULE_LISTS)" == "true" ]]; then
++            find_args+=("!" "-name" "*.modules.load*" "!" "-name" "*.modules.blocklist")
++        fi
++        find "${target_kernel_dir}" "${find_args[@]}" -delete
+     fi
+ 
+     # Copy the new kernel prebuilts

@@ -1,0 +1,63 @@
+From 3ff80e4110f3c861c74d5dce27c29e99dc4b9058 Mon Sep 17 00:00:00 2001
+From: Betterr <51264180+Star-caorui@users.noreply.github.com>
+Date: Sat, 17 Oct 2026 17:53:28 +0800
+Subject: [PATCH] a2dp: Skip audio context reconfig for SW codecs
+
+Since "a2dp-aidl: Handle source metadata changes", a game sound starting
+or stopping makes btif_av reconfigure the current codec with the GAME or
+MEDIA audio context. Only codecs configured by the audio HAL provider
+use that context. For any other codec, such as the software SBC and AAC
+encoders, the reconfiguration changes nothing, but it still ends and
+restarts the audio session.
+
+Audio HALs built on the default AIDL implementation disable their
+Bluetooth port when the session ends, and enable it again only when the
+framework reopens the stream. AudioService does that only when the codec
+configuration changed, which is true on the first switch alone, as the
+codec priority goes from default to highest. From the second switch on,
+everything played over Bluetooth is silent until the headset reconnects.
+
+Skip the reconfiguration when the provider does not support the current
+codec. The low latency mode is still recorded and sent to the peer.
+
+Tested on a Redmi Note 13 5G (MediaTek audio HAL) with AAC headphones,
+playing media with four switches between game and media usages. Before,
+the session restarted on each switch and the port stayed disabled from
+the second one on. After, the session was not restarted and the port
+stayed started throughout.
+
+Change-Id: I22843348fe6573f69893179f7fd4ec9f03c62c01
+---
+ system/btif/src/btif_av.cc | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/system/btif/src/btif_av.cc b/system/btif/src/btif_av.cc
+index 323af5320c..979442b9df 100644
+--- a/system/btif/src/btif_av.cc
++++ b/system/btif/src/btif_av.cc
+@@ -2522,6 +2522,12 @@ bool BtifAvStateMachine::StateOpened::ProcessEvent(uint32_t event, void* p_data)
+         return false;
+       }
+ 
++      if (!bluetooth::audio::a2dp::provider::supports_codec(current_codec->codecIndex())) {
++        log::info("codec {} does not use the audio context, not reconfiguring",
++                  current_codec->name());
++        break;
++      }
++
+       btav_a2dp_codec_config_t codec_config{
+               .codec_type = current_codec->codecIndex(),
+               .codec_priority = BTAV_A2DP_CODEC_PRIORITY_HIGHEST,
+@@ -2795,6 +2801,12 @@ bool BtifAvStateMachine::StateStarted::ProcessEvent(uint32_t event, void* p_data
+           return false;
+         }
+ 
++        if (!bluetooth::audio::a2dp::provider::supports_codec(current_codec->codecIndex())) {
++          log::info("codec {} does not use the audio context, not reconfiguring",
++                    current_codec->name());
++          break;
++        }
++
+         btav_a2dp_codec_config_t codec_config{
+                 .codec_type = current_codec->codecIndex(),
+                 .codec_priority = BTAV_A2DP_CODEC_PRIORITY_HIGHEST,

@@ -1,0 +1,30 @@
+From 2a7aadeab7a9dc2b84b0c54aafc0aa8fff3b373d Mon Sep 17 00:00:00 2001
+From: Michael Bestas <mkbestas@lineageos.org>
+Date: Sat, 6 Dec 2025 21:45:50 +0200
+Subject: [PATCH] envsetup: Allow skipping OOT kernel build
+
+Useful for development purposes while rebuilding the same device
+over and over or switching between different devices.
+
+Change-Id: I7367fe66652c8c542dac1ca3a1d3786453703550
+
+(cherry picked from LineageOS/android_vendor_lineage commit 2b3cc1ffc1e1c2a48c8a4a7510e3e56b26dff3ee)
+---
+ build/envsetup.sh | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/build/envsetup.sh b/build/envsetup.sh
+index 11ea8f6..7712155 100644
+--- a/build/envsetup.sh
++++ b/build/envsetup.sh
+@@ -928,6 +928,10 @@ function fixup_common_out_dir() {
+ }
+ 
+ function build_kernel() {
++    if [[ "${SKIP_KERNEL_BUILD}" == "true" || "${SKIP_KERNEL_BUILD}" == "1" ]]; then
++        echo "Skipping kernel build"
++        return
++    fi
+     local lineage_version="lineage-$(_get_build_var_cached PRODUCT_VERSION_MAJOR).$(_get_build_var_cached PRODUCT_VERSION_MINOR)"
+ 
+     local target_kernel_device="$(_get_build_var_cached TARGET_KERNEL_DEVICE)"

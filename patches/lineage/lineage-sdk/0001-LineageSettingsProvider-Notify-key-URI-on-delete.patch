@@ -1,0 +1,42 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Betterr <51264180+Star-caorui@users.noreply.github.com>
+Date: Sat, 17 Oct 2026 17:53:13 +0800
+Subject: [PATCH] LineageSettingsProvider: Notify key URI on delete
+
+Deleting a setting through call(), as "settings delete --lineage" does,
+notified observers with the table's URI, while putting one notifies them
+with the setting's own URI. Observers registered on a setting with
+notifyForDescendants then get a URI they do not know. The input settings
+observer in system_server looks the URI up in its map and calls the
+result, so
+
+  settings delete --lineage system swap_volume_keys_on_rotation
+
+crashes system_server with a NullPointerException.
+
+Pass the setting's URI to deleteForUser(), which resolves the table from
+it as well, so the deletion is announced like the insertion.
+
+Change-Id: Ib753763846a948cb3ca68023d8c0185821d428c7
+---
+ .../lineageos/lineagesettings/LineageSettingsProvider.java    | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/packages/LineageSettingsProvider/src/org/lineageos/lineagesettings/LineageSettingsProvider.java b/packages/LineageSettingsProvider/src/org/lineageos/lineagesettings/LineageSettingsProvider.java
+index 79b898dc..5b5dab6f 100644
+--- a/packages/LineageSettingsProvider/src/org/lineageos/lineagesettings/LineageSettingsProvider.java
++++ b/packages/LineageSettingsProvider/src/org/lineageos/lineagesettings/LineageSettingsProvider.java
+@@ -220,8 +220,8 @@ public class LineageSettingsProvider extends ContentProvider {
+ 
+     // Helper for call() CALL_METHOD_DELETE_* methods
+     private Bundle callHelperDelete(int callingUserId, Uri contentUri, String key) {
+-        final int rowsDeleted = deleteForUser(callingUserId, contentUri, NAME_SELECTION,
+-                new String[]{ key });
++        final int rowsDeleted = deleteForUser(callingUserId, Uri.withAppendedPath(contentUri, key),
++                NAME_SELECTION, new String[]{ key });
+         final Bundle ret = new Bundle();
+         ret.putInt(RESULT_ROWS_DELETED, rowsDeleted);
+         return ret;
+-- 
+2.54.0 (Apple Git-157)
+
