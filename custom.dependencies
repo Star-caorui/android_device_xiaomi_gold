@@ -1,0 +1,20 @@
+[
+  {
+    "repository": "LineageOS/android_device_mediatek_sepolicy_vndr",
+    "target_path": "device/mediatek/sepolicy_vndr",
+    "remote": "lineageos",
+    "branch": "lineage-24.0"
+  },
+  {
+    "repository": "LineageOS/android_hardware_mediatek",
+    "target_path": "hardware/mediatek",
+    "remote": "lineageos",
+    "branch": "lineage-24.0"
+  },
+  {
+    "repository": "LineageOS/android_hardware_xiaomi",
+    "target_path": "hardware/xiaomi",
+    "remote": "lineageos",
+    "branch": "lineage-24.0"
+  }
+]
