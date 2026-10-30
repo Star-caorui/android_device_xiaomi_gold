@@ -1,5 +1,4 @@
 /vendor/bin/hw/android\.hardware\.biometrics\.fingerprint-service\.xiaomi u:object_r:hal_fingerprint_default_exec:s0
-/vendor/bin/hw/android\.hardware\.media\.c2-mediatek u:object_r:mtk_hal_c2_exec:s0
 /vendor/bin/hw/android\.hardware\.sensors-service\.xiaomi-multihal u:object_r:hal_sensors_default_exec:s0
 /vendor/bin/mi_thermald u:object_r:mi_thermald_exec:s0
 /vendor/bin/batterysecret    u:object_r:vendor_batterysecret_exec:s0
@@ -7,7 +6,6 @@
 # Same-process graphics libraries loaded by framework and application processes.
 /vendor/lib(64)?/libmml\.so u:object_r:same_process_hal_file:s0
 /vendor/lib(64)?/libpq_sec\.so u:object_r:same_process_hal_file:s0
-/vendor/lib(64)?/libaal_sec\.so u:object_r:same_process_hal_file:s0
 
 # Camera calibration and runtime data.
 /data/vendor/camera(/.*)? u:object_r:gold_camera_data_file:s0
