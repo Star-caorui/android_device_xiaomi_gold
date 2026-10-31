@@ -3,11 +3,7 @@
 <module name="bluetooth" halVersion="2.0">
     <mixPorts>
         <!-- A2DP Audio Ports -->
-        <!-- The A2DP output is also the spatializer's. The Bluetooth module gives a device's
-             link to the first stream opened on it, so a second, separate spatializer output
-             would open but never send anything. Audio policy keeps an output that is a
-             device's only route open and plays every track on it, spatialized or not. -->
-        <mixPort name="a2dp output" role="source" flags="AUDIO_OUTPUT_FLAG_SPATIALIZER"/>
+        <mixPort name="a2dp output" role="source"/>
         <!-- Hearing AIDs Audio Ports -->
         <mixPort name="hearing aid output" role="source">
             <profile name="" format="AUDIO_FORMAT_PCM_16_BIT"
