@@ -10,3 +10,11 @@ cc_library_static {
     srcs: ["PowerModeExtension.cpp"],
     shared_libs: ["libbase"],
 }
+
+cc_library_shared {
+    name: "vendor.mediatek.hardware.power@2.0",
+    vendor: true,
+    compile_multilib: "first",
+    srcs: ["MtkPowerV2Stub.cpp"],
+    shared_libs: ["libutils"],
+}
