@@ -335,6 +335,9 @@ ro.vendor.nfc.dispatch_optim=1
 ro.vendor.nfc.selectcard=1
 ro.vendor.nfc.debounce_field_on=1
 
+# Consumer IR
+vendor.ir.carrier_freqs=30000,30000,33000,33000,36000,36000,38000,38000,40000,40000,56000,56000
+
 # WiFi
 wifi.interface=wlan0
 ro.vendor.wifi.sap.interface=ap0

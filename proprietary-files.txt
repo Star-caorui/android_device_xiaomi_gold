@@ -1622,9 +1622,6 @@ vendor/etc/camera/sceneDetection.xml
 vendor/etc/camera/sg_pre_model
 odm/etc/camera/camerabooster.json
 
-# ConsumerIR
-vendor/lib64/hw/consumerir.common.so
-
 # Connectivity
 vendor/etc/init/hw/init.connectivity.rc
 vendor/bin/wmt_loader
