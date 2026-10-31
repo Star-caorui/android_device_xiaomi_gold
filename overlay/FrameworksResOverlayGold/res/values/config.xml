@@ -583,6 +583,13 @@
         <item>ntp://time.apple.com</item>
     </string-array>
 
+    <!-- Colors in Settings: natural, boosted and saturated, which SurfaceFlinger maps to the display's sRGB and native modes. -->
+    <integer-array name="config_availableColorModes">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </integer-array>
+
     <!-- Doze: should the TYPE_PICK_UP_GESTURE sensor be used as a pulse signal. -->
     <bool name="config_dozePulsePickup">true</bool>
 
