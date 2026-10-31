@@ -64,8 +64,6 @@ vendor/lib64/librt_extamp_intf.so
 vendor/lib64/libspeech_enh_lib.so;FIX_SONAME
 vendor/lib64/libspeechparser_vendor.so
 vendor/lib64/libxlog.so
-vendor/lib/libaedv.so
-vendor/lib64/libaedv.so
 vendor/lib64/libmisight.so
 vendor/etc/misound_res.bin
 vendor/etc/misound_res_headphone.bin
@@ -1733,7 +1731,6 @@ vendor/etc/vintf/manifest/manifest_hwcomposer.xml
 vendor/etc/vintf/manifest/mapper.mediatek.xml
 vendor/lib/libged.so
 vendor/lib/libgralloc_extra.so
-vendor/lib/libladder.so
 vendor/lib/mt6833/libmml.so:vendor/lib/libmml.so
 vendor/lib/egl/libGLES_mali.so
 vendor/lib/egl/libGLES_meow.so
@@ -1783,7 +1780,6 @@ vendor/lib64/libgralloc_metadata.so
 vendor/lib/libgralloctypes_mtk.so
 vendor/lib64/libgralloctypes_mtk.so
 vendor/lib64/libhdrvideo.so
-vendor/lib64/libladder.so
 vendor/lib64/libmml.so
 vendor/lib64/libOpenCL.so
 vendor/lib64/libscltm.so
