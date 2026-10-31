@@ -7,3 +7,5 @@ allow vendor_init proc_ppm:file w_file_perms;
 # The stock modem init script tries to create /data/vendor_de/md, which only vold may
 # do. Stock policy does not allow it either, and the modem works without it.
 dontaudit vendor_init vendor_userdir_file:dir write;
+
+set_prop(vendor_init, vendor_ir_prop)
