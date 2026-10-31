@@ -98,17 +98,6 @@
         <effect name="spatializer" library="spatializer" uuid="ccd4cf09-a79d-46c2-9aae-06a1698d6c8f"/>
         <!--DOLBY END-->
     </effects>
-    <postprocess>
-        <stream type="music">
-            <apply effect="dlb_music_listener"/>
-        </stream>
-        <stream type="ring">
-            <apply effect="dlb_ring_listener"/>
-        </stream>
-        <stream type="alarm">
-            <apply effect="dlb_alarm_listener"/>
-        </stream>
-    </postprocess>
     <preprocess>
         <stream type="voice_communication">
             <apply effect="acoustic_echo_canceler"/>
