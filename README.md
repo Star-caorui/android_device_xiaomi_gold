@@ -35,6 +35,8 @@ LineageOS (`patches/lineage/`):
 | `external/setupcompat` | partnerconfig: Stop looking up a missing partner provider on every call (the setup wizard's language list stuttered without Google's setup wizard) | Ours, not sent upstream |
 | `system/core` | fastbootd: Always return false for GetDeviceLockStatus() | Mashopy's, from [Nothing-2A](https://github.com/Nothing-2A/android_system_core/commit/0d5990a96c5e6a404887f5575c5d00bcbbaaef74), for LKs patched with fenrir |
 | `system/fs/fs_mgr` | libfs_avb: Allow LKs patched with fenrir to boot on AOSP | Mashopy's, from [Nothing-2A](https://github.com/Nothing-2A/android_system_core/commit/8ff6e7a68523c3b870d8dcd5713c71ea15b43dd2) |
+| `frameworks/base` | core: camera2: StreamConfigurationMap: add constructor for MIUI camera | Pulkit077's, from [crDroid](https://github.com/crdroidandroid/android_frameworks_base/commit/37bff25b921323cb8ecb0fec6ed18871428f224b) |
+| `frameworks/base` | camera2: StreamConfigurationMap: add another constructor for MIUI camera | Pranav Vashi's, from [crDroid](https://github.com/crdroidandroid/android_frameworks_base/commit/3894a946e0134a14b663eaa3d7875fffac0b8ba4) |
 
 PixelOS (`patches/pixelos/`):
 
