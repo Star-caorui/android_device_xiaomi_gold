@@ -127,6 +127,7 @@
             <Feature name="dynamic-color-aspects"/>
             <Limit name="concurrent-instances" max="32" />
             <Limit name="performance-point-1920x1080" value="30" />
+            <Feature name="can-swap-width-height" value="1" />
         </MediaCodec>
         <MediaCodec name="c2.mtk.hevc.decoder.secure" type="video/hevc" >
             <Alias name="OMX.MTK.VIDEO.DECODER.HEVC.secure" />
@@ -190,6 +191,7 @@
             <Feature name="dynamic-color-aspects"/>
             <Limit name="concurrent-instances" max="32" />
             <Limit name="performance-point-1920x1080" value="30" />
+            <Feature name="can-swap-width-height" value="1" />
         </MediaCodec>
         <MediaCodec name="c2.mtk.avc.decoder.secure" type="video/avc" >
             <Alias name="OMX.MTK.VIDEO.DECODER.AVC.secure" />
@@ -428,6 +430,7 @@
             <Limit name="concurrent-instances" max="10" />
             <Feature name="bitrate-modes" value="VBR,CBR,CQ" />
             <Limit name="performance-point-1920x1080" value="30" />
+            <Feature name="can-swap-width-height" value="1" />
         </MediaCodec>
         <MediaCodec name="c2.mtk.heif.encoder" type="image/vnd.android.heic" >
             <Limit name="size" min="160x128" max="2560x1440" />
