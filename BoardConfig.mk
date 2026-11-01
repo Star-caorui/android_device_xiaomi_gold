@@ -103,10 +103,10 @@ GOLD_RECOVERY_TOUCH_MODULES := \
     gt9916r.ko
 
 BOARD_VENDOR_KERNEL_MODULES := $(addprefix $(TARGET_KERNEL_DIR)/,$(strip $(shell cat $(GOLD_MODULES)/modules.list.vendor_dlkm)))
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(addprefix $(TARGET_KERNEL_DIR)/,$(sort \
-    $(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD) \
-    $(BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD) \
-    $(GOLD_RECOVERY_TOUCH_MODULES)))
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(sort \
+    $(addprefix $(TARGET_KERNEL_DIR)/,$(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD)) \
+    $(addprefix $(TARGET_KERNEL_DIR)/,$(BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD)) \
+    $(addprefix $(TARGET_KERNEL_DIR)/,$(GOLD_RECOVERY_TOUCH_MODULES)))
 
 # Partitions
 BOARD_SUPER_PARTITION_SIZE := 9126805504
@@ -170,6 +170,7 @@ DEVICE_MATRIX_FILE := $(DEVICE_PATH)/compatibility_matrix.xml
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
     hardware/xiaomi/vintf/xiaomi_framework_compatibility_matrix.xml \
     hardware/mediatek/vintf/mediatek_framework_compatibility_matrix.xml \
+    $(DEVICE_PATH)/configs/vintf/gold_framework_compatibility_matrix.xml \
     $(DEVICE_PATH)/configs/vintf/dolby_framework_compatibility_matrix.xml
 
 # WiFi
@@ -187,7 +188,7 @@ WIFI_HIDL_FEATURE_DUAL_INTERFACE := true
 WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true
 
 # Reserve space for gapps
-include vendor/lineage/config/BoardConfigReservedSize.mk
+include vendor/clover/config/BoardConfigReservedSize.mk
 
 # Verified Boot
 AB_OTA_PARTITIONS += \

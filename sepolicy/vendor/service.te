@@ -1,1 +1,2 @@
 type hal_dms_service, hal_service_type, service_manager_type;
+type hal_lineage_health_service, hal_service_type, vendor_service_type, service_manager_type;

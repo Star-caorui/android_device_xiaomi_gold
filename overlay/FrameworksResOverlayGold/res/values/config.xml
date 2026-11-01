@@ -140,17 +140,17 @@
     <array name="config_autoBrightnessDisplayValuesNits">
         <item>4.2</item>
         <item>5.0</item>
-        <item>5.8</item>
-        <item>19.5</item>
-        <item>26.0</item>
-        <item>34.1</item>
-        <item>37.4</item>
-        <item>48.4</item>
-        <item>62.7</item>
-        <item>81.4</item>
-        <item>89.1</item>
-        <item>90.2</item>
-        <item>90.2</item>
+        <item>6.5</item>
+        <item>10.0</item>
+        <item>14.0</item>
+        <item>18.0</item>
+        <item>22.0</item>
+        <item>32.0</item>
+        <item>42.0</item>
+        <item>54.0</item>
+        <item>66.0</item>
+        <item>78.0</item>
+        <item>86.0</item>
         <item>90.2</item>
         <item>91.3</item>
         <item>91.3</item>

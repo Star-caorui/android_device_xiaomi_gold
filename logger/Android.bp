@@ -1,0 +1,15 @@
+android_app_import {
+    name: "LaughingLogger",
+    apk: "LaughingLogger.apk",
+    privileged: true,
+    certificate: "platform",
+    product_specific: true,
+    dex_preopt: { enabled: false },
+}
+
+prebuilt_etc {
+    name: "privapp-permissions-laughing-logger.xml",
+    src: "privapp-permissions-laughing-logger.xml",
+    sub_dir: "permissions",
+    product_specific: true,
+}

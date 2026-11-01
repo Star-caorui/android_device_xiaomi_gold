@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+    <privapp-permissions package="org.laughing.logger">
+        <permission name="android.permission.READ_LOGS"/>
+        <permission name="android.permission.DUMP"/>
+    </privapp-permissions>
+</permissions>

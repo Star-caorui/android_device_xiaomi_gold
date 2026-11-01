@@ -351,7 +351,7 @@ PRODUCT_SOONG_NAMESPACES += \
     hardware/google/pixel/pixelstats \
     hardware/google/pixel/power-libperfmgr \
     hardware/google/pixel/thermal \
-    hardware/lineage/interfaces/power-libperfmgr \
+    hardware/clover/interfaces/power-libperfmgr \
     hardware/mediatek \
     hardware/mediatek/libion_mtk \
     hardware/mediatek/libmtkperf_client \
@@ -415,3 +415,8 @@ PRODUCT_COPY_FILES += \
 
 # Inherit the proprietary files
 $(call inherit-product, vendor/xiaomi/gold/gold-vendor.mk)
+
+# Laughing Logger
+PRODUCT_PACKAGES += \
+    LaughingLogger \
+    privapp-permissions-laughing-logger.xml
