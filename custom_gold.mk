@@ -28,3 +28,7 @@ PRODUCT_BRAND := Redmi
 PRODUCT_MODEL := 2312DRAABG
 
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
+
+# PixelOS uses the Pixel launcher, which LauncherOverlayGold does not reach
+PRODUCT_PACKAGES += \
+    PixelLauncherOverlayGold

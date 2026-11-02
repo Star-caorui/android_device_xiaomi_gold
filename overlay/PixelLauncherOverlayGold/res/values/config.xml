@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: The LineageOS Project
+
+  SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <!-- Blurring the whole screen behind the app drawer on every frame of its animation is more
+         than the GPU composition keeps up with at 120 Hz. -->
+    <bool name="reduce_workspace_blur_usage">true</bool>
+</resources>
