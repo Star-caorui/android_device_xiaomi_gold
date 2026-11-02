@@ -255,7 +255,7 @@ ro.surface_flinger.has_HDR_display=false
 ro.surface_flinger.has_wide_color_display=true
 ro.surface_flinger.use_color_management=true
 ro.surface_flinger.wcg_composition_dataspace=143261696
-debug.renderengine.backend=skiavkthreaded
+debug.renderengine.backend=skiaglthreaded
 debug.sf.enable_gl_backpressure=0
 ro.surface_flinger.game_default_frame_rate_override=60
 
