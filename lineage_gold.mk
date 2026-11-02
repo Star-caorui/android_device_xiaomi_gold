@@ -32,8 +32,8 @@ TARGET_UNOFFICIAL_BUILD_ID := Betterr
 # The Dolby app is the audio effects panel
 TARGET_EXCLUDES_AUDIOFX := true
 
-# LineageOS's own apps, which PixelOS does not have: Trebuchet and the
-# updater, with the list of published builds
+# LineageOS's own apps: Trebuchet and the updater, with the list of published
+# builds
 PRODUCT_PACKAGES += \
     LauncherOverlayGold \
     UpdaterOverlayGold
