@@ -1,0 +1,270 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Betterr <51264180+Star-caorui@users.noreply.github.com>
+Date: Tue, 3 Nov 2026 17:18:21 +0800
+Subject: [PATCH] power/stats: Use mobile radio active time when the modem
+ reports no RX/TX
+
+MobileRadioPowerStatsProcessor charges data transfers only through the
+RX and TX times in ModemActivityInfo. Some modems leave them at zero:
+on a Redmi Note 13 5G (MediaTek MT6833) on 5G SA, downloading 77 MB and
+uploading 32 MB in a minute each reported only idle and sleep time, so
+mobile data was never charged to anyone. The legacy calculator fell back
+to the mobile radio active time for such modems; the power stats
+pipeline lost that.
+
+Collect the mobile radio active time, which the network stack drives
+from the cellular interfaces' idle timers, alongside the modem activity.
+When a period has no RX or TX power, estimate it as that time, less the
+call time that PhoneCallPowerStatsProcessor already charges, at
+radio.active, and share it between apps by their packets. Stats recorded
+before this have no active time and are estimated as before.
+
+Measured on that phone, with the CPU held awake and Wi-Fi off, the
+transfers drew 130 to 190 mA above idle; its power profile has
+radio.active at 194 mA.
+
+Change-Id: Ie7bdc39782af5ed0697e9df631055349421f4972
+---
+ .../server/power/stats/BatteryStatsImpl.java  |  6 ++++
+ .../stats/MobileRadioPowerStatsCollector.java | 14 ++++++++
+ .../format/MobileRadioPowerStatsLayout.java   | 16 +++++++++
+ .../MobileRadioPowerStatsProcessor.java       | 34 +++++++++++++++++--
+ 4 files changed, 67 insertions(+), 3 deletions(-)
+
+diff --git a/services/core/java/com/android/server/power/stats/BatteryStatsImpl.java b/services/core/java/com/android/server/power/stats/BatteryStatsImpl.java
+index 73e4d7c3..3f6f3e88 100644
+--- a/services/core/java/com/android/server/power/stats/BatteryStatsImpl.java
++++ b/services/core/java/com/android/server/power/stats/BatteryStatsImpl.java
+@@ -2028,6 +2028,12 @@ public class BatteryStatsImpl extends BatteryStats {
+                     mClock.elapsedRealtime() * 1000, STATS_SINCE_CHARGED) / 1000;
+         }
+ 
++        @Override
++        public LongSupplier getMobileRadioActiveDurationSupplier() {
++            return () -> mMobileRadioActiveTimer.getTotalTimeLocked(
++                    mClock.elapsedRealtime() * 1000, STATS_SINCE_CHARGED) / 1000;
++        }
++
+         @Override
+         public WakelockPowerStatsCollector.WakelockDurationRetriever
+                 getWakelockDurationRetriever() {
+diff --git a/services/core/java/com/android/server/power/stats/MobileRadioPowerStatsCollector.java b/services/core/java/com/android/server/power/stats/MobileRadioPowerStatsCollector.java
+index 0eb7401d..42385a42 100644
+--- a/services/core/java/com/android/server/power/stats/MobileRadioPowerStatsCollector.java
++++ b/services/core/java/com/android/server/power/stats/MobileRadioPowerStatsCollector.java
+@@ -86,6 +86,11 @@ public class MobileRadioPowerStatsCollector extends PowerStatsCollector {
+         LongSupplier getCallDurationSupplier();
+         LongSupplier getPhoneSignalScanDurationSupplier();
+ 
++        /** Time the radio was kept active for data, from the interface idle timers. */
++        default LongSupplier getMobileRadioActiveDurationSupplier() {
++            return () -> 0;
++        }
++
+         NetworkStats networkStatsDelta(NetworkStats stats, NetworkStats oldStats);
+     }
+ 
+@@ -100,6 +105,7 @@ public class MobileRadioPowerStatsCollector extends PowerStatsCollector {
+     private volatile TelephonyManager mTelephonyManager;
+     private LongSupplier mCallDurationSupplier;
+     private LongSupplier mScanDurationSupplier;
++    private LongSupplier mActiveDurationSupplier;
+     private volatile Supplier<NetworkStats> mNetworkStatsSupplier;
+     private ConsumedEnergyHelper mConsumedEnergyHelper;
+     private long mLastUpdateTimestampMillis;
+@@ -107,6 +113,7 @@ public class MobileRadioPowerStatsCollector extends PowerStatsCollector {
+     private NetworkStats mLastNetworkStats;
+     private long mLastCallDuration;
+     private long mLastScanDuration;
++    private long mLastActiveDuration;
+ 
+     public MobileRadioPowerStatsCollector(Injector injector, Observer observer) {
+         super(injector.getHandler(), injector.getPowerStatsCollectionThrottlePeriod(
+@@ -142,6 +149,7 @@ public class MobileRadioPowerStatsCollector extends PowerStatsCollector {
+         mNetworkStatsSupplier = mInjector.getMobileNetworkStatsSupplier();
+         mCallDurationSupplier = mInjector.getCallDurationSupplier();
+         mScanDurationSupplier = mInjector.getPhoneSignalScanDurationSupplier();
++        mActiveDurationSupplier = mInjector.getMobileRadioActiveDurationSupplier();
+ 
+         mConsumedEnergyHelper = new ConsumedEnergyHelper(mInjector.getConsumedEnergyRetriever(),
+                 EnergyConsumerType.MOBILE_RADIO);
+@@ -261,6 +269,12 @@ public class MobileRadioPowerStatsCollector extends PowerStatsCollector {
+         }
+         mLastScanDuration = scanDuration;
+ 
++        long activeDuration = mActiveDurationSupplier.getAsLong();
++        if (activeDuration >= mLastActiveDuration) {
++            mLayout.setDeviceActiveTime(mDeviceStats, activeDuration - mLastActiveDuration);
++        }
++        mLastActiveDuration = activeDuration;
++
+         SparseArray<long[]> stateStats = mPowerStats.stateStats;
+         stateStats.clear();
+ 
+diff --git a/services/core/java/com/android/server/power/stats/format/MobileRadioPowerStatsLayout.java b/services/core/java/com/android/server/power/stats/format/MobileRadioPowerStatsLayout.java
+index da6fc411..e8c7f215 100644
+--- a/services/core/java/com/android/server/power/stats/format/MobileRadioPowerStatsLayout.java
++++ b/services/core/java/com/android/server/power/stats/format/MobileRadioPowerStatsLayout.java
+@@ -36,6 +36,7 @@ public class MobileRadioPowerStatsLayout extends PowerStatsLayout {
+     private static final String EXTRA_DEVICE_IDLE_TIME_POSITION = "dt-idle";
+     private static final String EXTRA_DEVICE_SCAN_TIME_POSITION = "dt-scan";
+     private static final String EXTRA_DEVICE_CALL_TIME_POSITION = "dt-call";
++    private static final String EXTRA_DEVICE_ACTIVE_TIME_POSITION = "dt-active";
+     private static final String EXTRA_DEVICE_CALL_POWER_POSITION = "dp-call";
+     private static final String EXTRA_STATE_RX_TIME_POSITION = "srx";
+     private static final String EXTRA_STATE_TX_TIMES_POSITION = "stx";
+@@ -49,6 +50,7 @@ public class MobileRadioPowerStatsLayout extends PowerStatsLayout {
+     private int mDeviceIdleTimePosition;
+     private int mDeviceScanTimePosition;
+     private int mDeviceCallTimePosition;
++    private int mDeviceActiveTimePosition;
+     private int mDeviceCallPowerPosition;
+     private int mStateRxTimePosition;
+     private int mStateTxTimesPosition;
+@@ -75,6 +77,7 @@ public class MobileRadioPowerStatsLayout extends PowerStatsLayout {
+         mDeviceIdleTimePosition = extras.getInt(EXTRA_DEVICE_IDLE_TIME_POSITION);
+         mDeviceScanTimePosition = extras.getInt(EXTRA_DEVICE_SCAN_TIME_POSITION);
+         mDeviceCallTimePosition = extras.getInt(EXTRA_DEVICE_CALL_TIME_POSITION);
++        mDeviceActiveTimePosition = extras.getInt(EXTRA_DEVICE_ACTIVE_TIME_POSITION, -1);
+         mDeviceCallPowerPosition = extras.getInt(EXTRA_DEVICE_CALL_POWER_POSITION);
+         mStateRxTimePosition = extras.getInt(EXTRA_STATE_RX_TIME_POSITION);
+         mStateTxTimesPosition = extras.getInt(EXTRA_STATE_TX_TIMES_POSITION);
+@@ -94,6 +97,7 @@ public class MobileRadioPowerStatsLayout extends PowerStatsLayout {
+         extras.putInt(EXTRA_DEVICE_IDLE_TIME_POSITION, mDeviceIdleTimePosition);
+         extras.putInt(EXTRA_DEVICE_SCAN_TIME_POSITION, mDeviceScanTimePosition);
+         extras.putInt(EXTRA_DEVICE_CALL_TIME_POSITION, mDeviceCallTimePosition);
++        extras.putInt(EXTRA_DEVICE_ACTIVE_TIME_POSITION, mDeviceActiveTimePosition);
+         extras.putInt(EXTRA_DEVICE_CALL_POWER_POSITION, mDeviceCallPowerPosition);
+         extras.putInt(EXTRA_STATE_RX_TIME_POSITION, mStateRxTimePosition);
+         extras.putInt(EXTRA_STATE_TX_TIMES_POSITION, mStateTxTimesPosition);
+@@ -138,6 +142,7 @@ public class MobileRadioPowerStatsLayout extends PowerStatsLayout {
+         mDeviceIdleTimePosition = addDeviceSection(1, "idle");
+         mDeviceScanTimePosition = addDeviceSection(1, "scan");
+         mDeviceCallTimePosition = addDeviceSection(1, "call", FLAG_OPTIONAL);
++        mDeviceActiveTimePosition = addDeviceSection(1, "active", FLAG_OPTIONAL);
+     }
+ 
+     private void addStateStats() {
+@@ -192,6 +197,17 @@ public class MobileRadioPowerStatsLayout extends PowerStatsLayout {
+         return stats[mDeviceCallTimePosition];
+     }
+ 
++    public void setDeviceActiveTime(long[] stats, long durationMillis) {
++        stats[mDeviceActiveTimePosition] = durationMillis;
++    }
++
++    /**
++     * Time the radio was kept active for data, or 0 for stats recorded without it.
++     */
++    public long getDeviceActiveTime(long[] stats) {
++        return mDeviceActiveTimePosition < 0 ? 0 : stats[mDeviceActiveTimePosition];
++    }
++
+     public void setDeviceCallPowerEstimate(long[] stats, double power) {
+         stats[mDeviceCallPowerPosition] = (long) (power * MILLI_TO_NANO_MULTIPLIER);
+     }
+diff --git a/services/core/java/com/android/server/power/stats/processor/MobileRadioPowerStatsProcessor.java b/services/core/java/com/android/server/power/stats/processor/MobileRadioPowerStatsProcessor.java
+index 58835053..14d61426 100644
+--- a/services/core/java/com/android/server/power/stats/processor/MobileRadioPowerStatsProcessor.java
++++ b/services/core/java/com/android/server/power/stats/processor/MobileRadioPowerStatsProcessor.java
+@@ -44,6 +44,7 @@ class MobileRadioPowerStatsProcessor extends PowerStatsProcessor {
+     private final UsageBasedPowerEstimator mSleepPowerEstimator;
+     private final UsageBasedPowerEstimator mIdlePowerEstimator;
+     private final UsageBasedPowerEstimator mCallPowerEstimator;
++    private final UsageBasedPowerEstimator mActivePowerEstimator;
+     private final UsageBasedPowerEstimator mScanPowerEstimator;
+ 
+     private static class RxTxPowerEstimators {
+@@ -94,6 +95,7 @@ class MobileRadioPowerStatsProcessor extends PowerStatsProcessor {
+             powerRadioActiveMa = sum / (NUM_SIGNAL_STRENGTH_LEVELS + 1);
+         }
+         mCallPowerEstimator = new UsageBasedPowerEstimator(powerRadioActiveMa);
++        mActivePowerEstimator = new UsageBasedPowerEstimator(powerRadioActiveMa);
+ 
+         mScanPowerEstimator = new UsageBasedPowerEstimator(
+                 powerProfile.getAveragePowerOrDefault(PowerProfile.POWER_RADIO_SCANNING, 0));
+@@ -156,6 +158,10 @@ class MobileRadioPowerStatsProcessor extends PowerStatsProcessor {
+          * Estimated power for IDLE, SLEEP and CELL-SCAN states of the modem.
+          */
+         public double inactivePower;
++        /**
++         * Estimated power for data transfers when the modem reports no RX or TX time.
++         */
++        public double activePower;
+         /**
+          * Estimated power for IDLE, SLEEP and CELL-SCAN states of the modem.
+          */
+@@ -276,8 +282,19 @@ class MobileRadioPowerStatsProcessor extends PowerStatsProcessor {
+                     mStatsLayout.getDeviceCallTime(mTmpDeviceStatsArray));
+         }
+ 
++        // Some modems report no RX or TX time (for instance on NR): fall back to the time the
++        // radio was kept active for data, outside calls, which are estimated separately.
++        if (intermediates.rxPower == 0 && intermediates.txPower == 0) {
++            long activeTime = mStatsLayout.getDeviceActiveTime(mTmpDeviceStatsArray)
++                    - mStatsLayout.getDeviceCallTime(mTmpDeviceStatsArray);
++            if (activeTime > 0) {
++                intermediates.activePower = mActivePowerEstimator.calculatePower(activeTime);
++            }
++        }
++
+         mStatsLayout.setDevicePowerEstimate(mTmpDeviceStatsArray,
+-                intermediates.rxPower + intermediates.txPower + intermediates.inactivePower);
++                intermediates.rxPower + intermediates.txPower + intermediates.activePower
++                        + intermediates.inactivePower);
+         mStatsLayout.setDeviceCallPowerEstimate(mTmpDeviceStatsArray, intermediates.callPower);
+         stats.setDeviceStats(deviceStates, mTmpDeviceStatsArray);
+     }
+@@ -294,7 +311,8 @@ class MobileRadioPowerStatsProcessor extends PowerStatsProcessor {
+             Intermediates intermediates =
+                     (Intermediates) mPlan.deviceStateEstimations.get(i).intermediates;
+             totalPower += intermediates.rxPower + intermediates.txPower
+-                    + intermediates.inactivePower + intermediates.callPower;
++                    + intermediates.activePower + intermediates.inactivePower
++                    + intermediates.callPower;
+             totalConsumedEnergy += intermediates.consumedEnergy;
+         }
+ 
+@@ -314,6 +332,7 @@ class MobileRadioPowerStatsProcessor extends PowerStatsProcessor {
+             int[] deviceStates, Intermediates intermediates, double ratio) {
+         intermediates.rxPower *= ratio;
+         intermediates.txPower *= ratio;
++        intermediates.activePower *= ratio;
+         intermediates.inactivePower *= ratio;
+         intermediates.callPower *= ratio;
+ 
+@@ -322,7 +341,8 @@ class MobileRadioPowerStatsProcessor extends PowerStatsProcessor {
+         }
+ 
+         mStatsLayout.setDevicePowerEstimate(mTmpDeviceStatsArray,
+-                intermediates.rxPower + intermediates.txPower + intermediates.inactivePower);
++                intermediates.rxPower + intermediates.txPower + intermediates.activePower
++                        + intermediates.inactivePower);
+         mStatsLayout.setDeviceCallPowerEstimate(mTmpDeviceStatsArray, intermediates.callPower);
+         stats.setDeviceStats(deviceStates, mTmpDeviceStatsArray);
+     }
+@@ -344,6 +364,7 @@ class MobileRadioPowerStatsProcessor extends PowerStatsProcessor {
+                 Intermediates intermediates = (Intermediates) dse.intermediates;
+                 cdseIntermediates.rxPower += intermediates.rxPower;
+                 cdseIntermediates.txPower += intermediates.txPower;
++                cdseIntermediates.activePower += intermediates.activePower;
+                 cdseIntermediates.inactivePower += intermediates.inactivePower;
+                 cdseIntermediates.consumedEnergy += intermediates.consumedEnergy;
+             }
+@@ -384,6 +405,13 @@ class MobileRadioPowerStatsProcessor extends PowerStatsProcessor {
+                 power += intermediates.txPower * mStatsLayout.getUidTxPackets(mTmpUidStatsArray)
+                         / intermediates.txPackets;
+             }
++            long totalPackets = intermediates.rxPackets + intermediates.txPackets;
++            if (totalPackets != 0) {
++                power += intermediates.activePower
++                        * (mStatsLayout.getUidRxPackets(mTmpUidStatsArray)
++                                + mStatsLayout.getUidTxPackets(mTmpUidStatsArray))
++                        / totalPackets;
++            }
+ 
+             if (power != 0) {
+                 mStatsLayout.setUidPowerEstimate(mTmpUidStatsArray, power);
+-- 
+2.54.0 (Apple Git-157)
+
