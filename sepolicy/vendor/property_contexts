@@ -20,3 +20,4 @@ vendor.debug.configurestreams. u:object_r:vendor_mtk_emcamera_prop:s0 prefix str
 
 # Queried by the framework audio server. Never set here.
 ro.vendor.qti.va_aosp.support u:object_r:vendor_mtk_audio_prop:s0 exact bool
+persist.vendor.trigger.cct    u:object_r:vendor_citsensor_prop:s0 exact bool

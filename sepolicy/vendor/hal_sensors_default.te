@@ -2,3 +2,17 @@
 # file_contexts. The common AOSP HAL policy supplies its Binder and service
 # manager permissions.
 r_dir_file(hal_sensors_default, gold_sysfs_display)
+
+# citsensor-service runs stock's under-display light sensor compensation: it reads the framework's
+# sensor events, the screen content over the sensor from the composer, and the brightness.
+allow hal_sensors_default fwk_sensor_service:service_manager find;
+binder_call(hal_sensors_default, system_server)
+hal_client_domain(hal_sensors_default, hal_mtk_composer_ext)
+hal_client_domain(hal_sensors_default, hal_graphics_allocator)
+allow hal_sensors_default gold_disp_feature_device:chr_file rw_file_perms;
+allow hal_sensors_default mnt_vendor_file:dir search;
+r_dir_file(hal_sensors_default, nvcfg_file)
+r_dir_file(hal_sensors_default, sysfs_leds)
+set_prop(hal_sensors_default, vendor_citsensor_prop)
+# It also probes every input device for a Hall sensor, which gold does not have.
+dontaudit hal_sensors_default input_device:chr_file write;

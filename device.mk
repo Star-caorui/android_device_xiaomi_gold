@@ -326,6 +326,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.sensors-service.xiaomi-multihal \
     android.hardware.sensors@2.0-subhal-impl-1.0 \
+    citsensor-service \
     sensors.dynamic_sensor_hal
 
 PRODUCT_PACKAGES += \

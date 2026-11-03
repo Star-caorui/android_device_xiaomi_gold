@@ -1,0 +1,4 @@
+service vendor.citsensor /vendor/bin/hw/citsensor-service
+    class late_start
+    user system
+    group system input

@@ -227,6 +227,9 @@ ro.incremental.enable=yes
 ro.frp.pst=/dev/block/by-name/frp
 ro.oem_unlock_supported=1
 
+# Sensors
+persist.vendor.display.parse.algorithm=1
+
 # Surface Flinger
 debug.sf.enable_adpf_cpu_hint=true
 debug.sf.enable_hwc_vds=0
