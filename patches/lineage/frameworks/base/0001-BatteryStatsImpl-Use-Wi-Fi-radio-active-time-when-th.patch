@@ -1,0 +1,44 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Betterr <51264180+Star-caorui@users.noreply.github.com>
+Date: Tue, 3 Nov 2026 16:44:23 +0800
+Subject: [PATCH] BatteryStatsImpl: Use Wi-Fi radio active time when the
+ controller has no stats
+
+Without enhanced power reporting (no link layer stats from the driver),
+WifiPowerStatsProcessor estimates Wi-Fi power as active time times
+wifi.active, plus scans. WifiPowerStatsCollector takes that active time
+from getWifiActiveDuration(), which returns the global "Wi-Fi running"
+time. Nothing reports Wi-Fi running any more: BatteryStatsManager has no
+API for it and noteWifiRunning() has no callers, so that timer stays at
+zero and Wi-Fi is charged nothing on these devices.
+
+The Wi-Fi radio active timer is what tracks data activity: the network
+stack moves it from the interface idle timer through
+noteWifiRadioPowerState(). Use it instead. The power is then shared
+between apps by their packets, as before.
+
+On a Redmi Note 13 5G (MediaTek MT6833, no link layer stats in its
+firmware), after about five hours on battery: Wi-Fi running 0 ms, Wi-Fi
+radio active 4 h 14 min, and no Wi-Fi entry in the battery usage.
+
+Change-Id: If4dabd297a1c7bf7409cec53792c7dc224195dd2
+---
+ .../java/com/android/server/power/stats/BatteryStatsImpl.java   | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/services/core/java/com/android/server/power/stats/BatteryStatsImpl.java b/services/core/java/com/android/server/power/stats/BatteryStatsImpl.java
+index 73e4d7c3..af91dcbb 100644
+--- a/services/core/java/com/android/server/power/stats/BatteryStatsImpl.java
++++ b/services/core/java/com/android/server/power/stats/BatteryStatsImpl.java
+@@ -373,7 +373,7 @@ public class BatteryStatsImpl extends BatteryStats {
+                 @Override
+                 public long getWifiActiveDuration() {
+                     synchronized (BatteryStatsImpl.this) {
+-                        return getGlobalWifiRunningTime(mClock.elapsedRealtime() * 1000,
++                        return getWifiActiveTime(mClock.elapsedRealtime() * 1000,
+                                 STATS_SINCE_CHARGED) / 1000;
+                     }
+                 }
+-- 
+2.54.0 (Apple Git-157)
+
