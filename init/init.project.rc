@@ -127,8 +127,6 @@ on boot
     chmod 0664 /sys/devices/virtual/mi_display/disp_feature/disp-DSI-0/doze_brightness
     chmod 0777 /sys/class/mi_display/disp-DSI-0/brightness_clone
     chown system system /sys/class/mi_display/disp-DSI-0/brightness_clone
-    chmod 0777 /dev/mi_display/disp_feature
-    chown system system /dev/mi_display/disp_feature
     chmod 0777 /sys/class/mi_display/disp-DSI-0/disp_param
     chown system system /sys/class/mi_display/disp-DSI-0/disp_param
 # N17-V code for HQ-404538 by sunzhaopeng at 2024.8.15 end

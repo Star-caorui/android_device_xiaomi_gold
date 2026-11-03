@@ -225,3 +225,10 @@
 
 #widevine driver node
 /dev/drm_wv               0660   media      system
+
+# Display feature
+subsystem mi_display
+    devname uevent_devname
+    dirname /dev
+
+/dev/mi_display/disp_feature                     0660    system  system

@@ -12,6 +12,7 @@
 /mnt/vendor/persist/camera(/.*)? u:object_r:gold_camera_persist_file:s0
 
 # Device nodes and the stock rescue partition used as /cache.
+/dev/mi_display/disp_feature u:object_r:gold_disp_feature_device:s0
 /dev/miev u:object_r:gold_miev_device:s0
 /dev/block/by-name/rescue u:object_r:cache_block_device:s0
 
