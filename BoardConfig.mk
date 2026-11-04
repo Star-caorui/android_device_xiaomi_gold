@@ -223,3 +223,7 @@ BOARD_AVB_VBMETA_VENDOR_ROLLBACK_INDEX_LOCATION := 4
 
 # Inherit the proprietary files
 include vendor/xiaomi/gold/BoardConfigVendor.mk
+
+# Allow prebuilt camera ELF (.so) files in PRODUCT_COPY_FILES
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+DONT_UNCOMPRESS_PRIV_APPS_DEXS := true

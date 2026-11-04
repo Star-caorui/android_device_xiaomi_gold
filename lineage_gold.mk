@@ -22,21 +22,32 @@ PRODUCT_NAME := lineage_gold
 PRODUCT_DEVICE := gold
 PRODUCT_MANUFACTURER := Xiaomi
 PRODUCT_BRAND := Redmi
-PRODUCT_MODEL := 2312DRAABG
+PRODUCT_MODEL := Redmi Note 13 5G
 
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
-# Shown in the LineageOS version in Settings: 24.0-<date>-UNOFFICIAL-Betterr-gold
-TARGET_UNOFFICIAL_BUILD_ID := Betterr
 
 # The Dolby app is the audio effects panel
 TARGET_EXCLUDES_AUDIOFX := true
 
-# LineageOS's own apps: Trebuchet and the updater, with the list of published
-# builds
+# Launcher overlay
 PRODUCT_PACKAGES += \
-    LauncherOverlayGold \
-    UpdaterOverlayGold
+    LauncherOverlayGold
 
+# PalapaOS Redesign UI Properties
 PRODUCT_PRODUCT_PROPERTIES += \
-    lineage.updater.uri=https://raw.githubusercontent.com/Star-caorui/lineageos-gold/main/updates/rk/{incr}.json
+    ro.palapa.edition=Majapahit Edition \
+    ro.palapa.os.name=Palapa OS \
+    ro.palapa.os.version=Majapahit \
+    ro.wowo.edition=Majapahit Edition \
+    ro.wowo.os.name=Palapa OS \
+    ro.wowo.os.version=Majapahit \
+    ro.shinkai.maintainer=Asnalstan
+
+PRODUCT_SYSTEM_PROPERTIES += \
+    ro.product.marketname=Redmi Note 13 5G \
+    ro.crdroid.version=13.0
+
+# Leica Camera
+$(call inherit-product-if-exists, vendor/xiaomi/camera/camera.mk)
+
