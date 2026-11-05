@@ -176,16 +176,6 @@ ro.vendor.mtk_nn.option=A,B,E,F,Z
 ro.vendor.mtk_nn_quant_preferred=1
 ro.vendor.mtk_nn_baseline_support=1
 
-# Memory: stock's low memory killer tuning
-ro.lmk.kill_timeout_ms=100
-ro.lmk.low=1000
-ro.lmk.psi_complete_stall_ms=35
-ro.lmk.psi_partial_stall_ms=35
-ro.lmk.swap_free_low_percentage=10
-ro.lmk.swap_util_max=90
-ro.lmk.thrashing_limit=30
-ro.lmk.thrashing_limit_decay=50
-
 # Picture Quality
 debug.mediatek.appgamepq_compress=1
 ro.vendor.mtk_pq_support=2
