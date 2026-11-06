@@ -120,13 +120,16 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.bluetooth_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth_le.xml
 
 # Camera
-PRODUCT_PACKAGES += \
-    ApertureResGoldNoUWMGoldACn \
-    ApertureResGoldNoUWMGoldAIn \
-    ApertureResGoldNoUWMGoldCn \
-    ApertureResGoldNoUWMIronPGl \
-    ApertureResGoldUWMGoldIn \
-    ApertureResGoldUWMIronGl
+#PRODUCT_PACKAGES += \
+ #   ApertureResGoldNoUWMGoldACn \
+  #  ApertureResGoldNoUWMGoldAIn \
+   # ApertureResGoldNoUWMGoldCn \
+    #ApertureResGoldNoUWMIronPGl \
+    #ApertureResGoldUWMGoldIn \
+#    ApertureResGoldUWMIronGl
+# Leica Camera Prebuilts
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,$(DEVICE_PATH)/prebuilt/system,$(TARGET_COPY_OUT_SYSTEM))
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.flash-autofocus.xml \
@@ -275,9 +278,9 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_ENFORCE_RRO_TARGETS := *
 
-# Power-off alarm
-PRODUCT_PACKAGES += \
-    PowerOffAlarm
+## Power-off alarm
+#PRODUCT_PACKAGES += \
+#    PowerOffAlarm
 
 # Power
 PRODUCT_PACKAGES += \

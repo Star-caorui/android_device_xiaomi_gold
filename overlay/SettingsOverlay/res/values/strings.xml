@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Maintainer Name -->
+    <string name="maintainer_name" translatable="false">Asnalstan</string>
+    <string name="device_maintainer" translatable="false">Asnalstan</string>
+
+    <!-- Support & Donate Link -->
+    <string name="donate_url" translatable="false">https://t.me/ServerHive_bot?start=dev_KEXEQ2</string>
+    <string name="support_url" translatable="false">https://t.me/ServerHive_bot?start=dev_KEXEQ2</string>
+    <string name="maintainer_donate_url" translatable="false">https://t.me/ServerHive_bot?start=dev_KEXEQ2</string>
+</resources>
+
