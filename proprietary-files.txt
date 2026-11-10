@@ -1,4 +1,4 @@
-# All blobs are from V3.0.5.0.VNQMIXM
+# All blobs are from V3.0.6.0.VNQMIXM
 
 # Audio
 vendor/bin/hw/android.hardware.audio.service-aidl.mediatek
