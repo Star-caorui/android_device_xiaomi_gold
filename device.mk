@@ -328,7 +328,6 @@ PRODUCT_COPY_FILES += \
 
 # Recovery
 PRODUCT_EXTRA_RECOVERY_KEYS += \
-    $(DEVICE_PATH)/security/aosp-testkey \
     $(DEVICE_PATH)/security/mindthegapps
 
 # Sensors
