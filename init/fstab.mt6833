@@ -5,14 +5,14 @@
 
 # Dynamic partitions. Keep both read-only filesystem variants accepted by the
 # stock fstab so the same vendor ramdisk can mount either stock or custom images.
-system                            /system                      erofs    ro                              wait,slotselect,logical,first_stage_mount
-system                            /system                      ext4     noatime,ro                      wait,slotselect,logical,first_stage_mount,readahead_size_kb=128
-system_ext                        /system_ext                  erofs    ro                              wait,slotselect,logical,first_stage_mount
-system_ext                        /system_ext                  ext4     noatime,ro                      wait,slotselect,logical,first_stage_mount,readahead_size_kb=128
+system                            /system                      erofs    ro                              wait,slotselect,avb=vbmeta_system,logical,first_stage_mount
+system                            /system                      ext4     noatime,ro                      wait,slotselect,avb=vbmeta_system,logical,first_stage_mount,readahead_size_kb=128
+system_ext                        /system_ext                  erofs    ro                              wait,slotselect,avb=vbmeta_system,logical,first_stage_mount
+system_ext                        /system_ext                  ext4     noatime,ro                      wait,slotselect,avb=vbmeta_system,logical,first_stage_mount,readahead_size_kb=128
 vendor                            /vendor                      erofs    ro                              wait,slotselect,avb,logical,first_stage_mount
 vendor                            /vendor                      ext4     noatime,ro                      wait,slotselect,avb,logical,first_stage_mount
-product                           /product                     erofs    ro                              wait,slotselect,logical,first_stage_mount
-product                           /product                     ext4     noatime,ro                      wait,slotselect,logical,first_stage_mount,readahead_size_kb=128
+product                           /product                     erofs    ro                              wait,slotselect,avb,logical,first_stage_mount
+product                           /product                     ext4     noatime,ro                      wait,slotselect,avb,logical,first_stage_mount,readahead_size_kb=128
 vendor_dlkm                       /vendor_dlkm                 erofs    ro                              wait,slotselect,avb,logical,first_stage_mount
 vendor_dlkm                       /vendor_dlkm                 ext4     noatime,ro                      wait,slotselect,avb,logical,first_stage_mount
 odm_dlkm                          /odm_dlkm                    erofs    ro                              wait,slotselect,avb,logical,first_stage_mount
