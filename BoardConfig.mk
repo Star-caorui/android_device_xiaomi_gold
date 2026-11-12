@@ -70,49 +70,29 @@ TARGET_SCREEN_DENSITY := 440
 TARGET_USES_VULKAN := true
 
 # Kernel
-TARGET_KERNEL_NO_GCC := true
 TARGET_KERNEL_VERSION := 6.6
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_KERNEL_IMAGE_NAME := Image.gz
-TARGET_KERNEL_SOURCE := kernel/xiaomi/gold-6.6
-TARGET_KERNEL_CONFIG := \
-	gki_defconfig \
-	gold.config
 
-# The kernel, DTB, DTBO and vendor modules are the stock ones
 TARGET_FORCE_PREBUILT_KERNEL := true
-TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)-kernel/kernel
-BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)-kernel/dtbo.img
-BOARD_PREBUILT_DTBIMAGE_DIR := $(DEVICE_PATH)-kernel/dtb
-BOARD_SYSTEM_DLKM_SRC := $(DEVICE_PATH)-kernel/system_dlkm
-TARGET_PREBUILT_KERNEL_HEADERS := $(DEVICE_PATH)/kernel-headers/kernel-uapi-headers.tar.gz
+GOLD_KERNEL := $(DEVICE_PATH)-kernel
+TARGET_PREBUILT_KERNEL := $(GOLD_KERNEL)/$(BOARD_KERNEL_IMAGE_NAME)
+TARGET_PREBUILT_KERNEL_HEADERS := $(GOLD_KERNEL)/kernel-uapi-headers.tar.gz
+BOARD_PREBUILT_DTBIMAGE_DIR := $(GOLD_KERNEL)
+BOARD_PREBUILT_DTBOIMAGE := $(GOLD_KERNEL)/dtbo.img
 
-# Modules of MIUI's app freezer (Millet). They load on this kernel, but nothing outside
-# MIUI talks to them. Binder itself is provided by GKI; binder_prio remains.
-GOLD_UNUSED_VENDOR_KERNEL_MODULES := \
-    binder_gki.ko \
-    millet_binder.ko \
-    millet_core.ko \
-    millet_hs.ko \
-    millet_oem_cgroup.ko \
-    millet_pkg.ko \
-    millet_sig.ko
+BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(strip $(shell cat $(GOLD_KERNEL)/system_dlkm.modules.load 2>/dev/null))
+BOARD_SYSTEM_KERNEL_MODULES := $(addprefix $(GOLD_KERNEL)/,$(BOARD_SYSTEM_KERNEL_MODULES_LOAD))
 
-BOARD_VENDOR_KERNEL_MODULES := $(filter-out \
-    $(addprefix $(DEVICE_PATH)-kernel/vendor_dlkm/,$(GOLD_UNUSED_VENDOR_KERNEL_MODULES)), \
-    $(wildcard $(DEVICE_PATH)-kernel/vendor_dlkm/*.ko))
+GOLD_MODULES := $(DEVICE_PATH)/modules
+BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(GOLD_MODULES)/modules.load.vendor))
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(GOLD_MODULES)/modules.load.vendor_ramdisk))
+BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(GOLD_MODULES)/modules.load.recovery))
 
-BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)-kernel/modules.load.vendor))
-BOARD_VENDOR_KERNEL_MODULES_LOAD := $(filter-out \
-    $(GOLD_UNUSED_VENDOR_KERNEL_MODULES), \
-    $(BOARD_VENDOR_KERNEL_MODULES_LOAD))
-
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(wildcard $(DEVICE_PATH)-kernel/vendor_ramdisk/*.ko)
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)-kernel/modules.load.vendor_ramdisk))
-
-BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)-kernel/modules.load.recovery))
-
-BOOT_KERNEL_MODULES := $(BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD) $(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD)
+BOARD_VENDOR_KERNEL_MODULES := $(addprefix $(GOLD_KERNEL)/,$(strip $(shell cat $(GOLD_MODULES)/modules.list.vendor_dlkm)))
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(addprefix $(GOLD_KERNEL)/,$(sort \
+    $(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD) \
+    $(BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD)))
 
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 262144
